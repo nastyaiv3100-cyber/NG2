@@ -276,6 +276,21 @@ header{position:absolute;top:0;left:0;width:100%;z-index:4;border:0;background:t
 #modal .modal-kicker,#modal.task-card .modal-kicker{color:#234632}
 @media(min-width:701px){#modal,#modal.task-card{top:26%;max-height:calc(74% - 12px)}#modal:not(.task-card){min-height:60%}}
 
+
+/* Readable task typography at every screen size. */
+#modal.task-card h2{font-size:30px;line-height:1.25}
+#modal.task-card #modal-text{font-size:22px;line-height:1.55}
+#modal.task-card .answer-row,#modal.task-card .task-answers .inline-answer{font-size:22px;line-height:1.5}
+#modal.task-card .answer-row input,#modal.task-card .answer-row select,#modal.task-card .task-answers .inline-answer input,#modal.task-card .task-answers .inline-answer select{font-size:22px;height:48px}
+#modal.task-card .task-answers .calculation-answer>span:first-child{flex:0 1 auto;min-width:110px}
+#modal.task-card .task-answers .inline-answer{flex-wrap:wrap}
+#modal.task-card .ordered-sequences>.answer-row{font-size:20px}
+#modal.task-card .ordered-sequences input{max-width:none}
+#modal.task-card .check-task{font-size:18px;padding:12px 26px}
+#modal.task-card .task-feedback{font-size:18px;line-height:1.5}
+#modal.task-card .scratch-title,#modal.task-card .answer-bar .answer-unit{font-size:18px}
+@media(max-width:700px){#modal.task-card h2{font-size:26px}#modal.task-card #modal-text,#modal.task-card .answer-row,#modal.task-card .task-answers .inline-answer{font-size:20px}#modal.task-card .answer-row input,#modal.task-card .answer-row select,#modal.task-card .task-answers .inline-answer input,#modal.task-card .task-answers .inline-answer select{font-size:20px}}
+
 </style>
 </head>
 <body>

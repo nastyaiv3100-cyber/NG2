@@ -189,7 +189,7 @@ header{position:absolute;top:0;left:0;width:100%;z-index:4;border:0;background:t
 </head>
 <body>
 <header><div class="brand" id="author-brand"><img class="author-photo" src="assets/Frame 78 (2)-no-bg-preview (carve.photos).png" alt="Эмблема канала Урок на Play"><div class="author-copy"><strong>Орлова А.Р.</strong><a class="channel-name" href="https://t.me/lesson_play" target="_blank" rel="noopener noreferrer">Урок на Play ↗</a></div></div><div class="header-actions"><button id="play-video" class="sound">▶ Приветствие</button><button class="sound" id="play-victory" hidden>🏆 Победа</button><button class="sound" id="sound" aria-pressed="false">♫ Звук выключен</button><button class="reset" id="reset" title="Сбросить открытые подарки">↻ Начать заново</button></div><p id="video-status" class="visually-hidden" aria-live="polite"></p></header>
-<main><div class="layout scene"><video id="greeting" class="scene-video" playsinline autoplay preload="auto" muted poster="assets/greeting-poster.jpg" aria-label="Новогоднее приветствие персонажа"><source src="assets/privet1.mp4" type="video/mp4"></video><video id="gift-reaction" class="scene-video reaction-video" playsinline preload="auto" muted hidden aria-label="Эльф открывает подарок"><source src="assets/ura.mp4" type="video/mp4"></video><video id="task-reaction" class="scene-video reaction-video" playsinline preload="auto" muted hidden aria-label="Эльф предлагает задание"><source src="assets/zadanie.mp4" type="video/mp4"></video><video id="victory-reaction" class="scene-video reaction-video" playsinline preload="metadata" muted hidden aria-label="Эльф поздравляет с победой"><source src="assets/pobeda.mp4" type="video/mp4"></video><section class="character-area" aria-label="Персонаж и приветствие"></section><section class="panel" aria-label="Новогодние окошки"><div class="stats"><div><h2>Твои 40 чудес</h2><p>Выбирай окошко — и открывай сюрприз</p></div><div class="counter" aria-live="polite"><span class="counter-icon">🎁</span><div><strong id="gifts">0</strong><span style="font-size:12px;color:var(--muted)"> / 20</span><small>подарков открыто</small></div></div></div><div class="progress-label"><span id="progress-text" class="visually-hidden">Открыто 0 из 40 окошек</span><b id="percent">0%</b></div><div class="track" role="progressbar" aria-label="Открытые окошки" aria-valuemin="0" aria-valuemax="40" aria-valuenow="0"><div class="fill" id="fill"></div></div><div class="grid" id="grid"></div><dialog id="modal" aria-labelledby="modal-title"><div class="modal-icon" id="modal-icon"></div><img id="gift-item" alt="" hidden><div class="modal-kicker" id="modal-kicker"></div><h2 id="modal-title"></h2><p id="modal-text"></p><div id="task-content" hidden></div><button class="close" id="close">Чудесно!</button></dialog><p class="hint" id="hint" role="status" aria-live="polite"></p></section></div></main>
+<main><div class="layout scene"><video id="greeting" class="scene-video" playsinline autoplay preload="auto" muted poster="assets/greeting-poster.jpg" aria-label="Новогоднее приветствие персонажа"><source src="assets/privet3.mp4" type="video/mp4"></video><video id="gift-reaction" class="scene-video reaction-video" playsinline preload="auto" muted hidden aria-label="Эльф открывает подарок"><source src="assets/ura3.mp4" type="video/mp4"></video><video id="task-reaction" class="scene-video reaction-video" playsinline preload="auto" muted hidden aria-label="Эльф предлагает задание"><source src="assets/zadanie.mp4" type="video/mp4"></video><video id="victory-reaction" class="scene-video reaction-video" playsinline preload="metadata" muted hidden aria-label="Эльф поздравляет с победой"><source src="assets/pobeda.mp4" type="video/mp4"></video><section class="character-area" aria-label="Персонаж и приветствие"></section><section class="panel" aria-label="Новогодние окошки"><div class="stats"><div><h2>Твои 40 чудес</h2><p>Выбирай окошко — и открывай сюрприз</p></div><div class="counter" aria-live="polite"><span class="counter-icon">🎁</span><div><strong id="gifts">0</strong><span style="font-size:12px;color:var(--muted)"> / 20</span><small>подарков открыто</small></div></div></div><div class="progress-label"><span id="progress-text" class="visually-hidden">Открыто 0 из 40 окошек</span><b id="percent">0%</b></div><div class="track" role="progressbar" aria-label="Открытые окошки" aria-valuemin="0" aria-valuemax="40" aria-valuenow="0"><div class="fill" id="fill"></div></div><div class="grid" id="grid"></div><dialog id="modal" aria-labelledby="modal-title"><div class="modal-icon" id="modal-icon"></div><img id="gift-item" alt="" hidden><div class="modal-kicker" id="modal-kicker"></div><h2 id="modal-title"></h2><p id="modal-text"></p><div id="task-content" hidden></div><button class="close" id="close">Чудесно!</button></dialog><p class="hint" id="hint" role="status" aria-live="polite"></p></section></div></main>
 
 
 <dialog id="reset-confirm" aria-labelledby="reset-title"><h2 id="reset-title">Начать заново?</h2><p>Все коробки снова закроются, а прогресс обнулится.</p><form method="dialog"><button value="cancel" autofocus>Продолжить игру</button><button value="restart">Начать заново</button></form></dialog>
@@ -226,7 +226,7 @@ const windowNumber=id=>windowOrder.indexOf(id)+1;
 const $=id=>document.getElementById(id);function save(){try{localStorage.setItem(key,JSON.stringify([...opened]));localStorage.setItem(key+'-order',JSON.stringify(windowOrder));localStorage.setItem(key+'-victory',String(victoryPlayed));localStorage.setItem(key+'-sound',String(soundOn))}catch{ $('hint').textContent='Браузер не разрешает сохранение. Прогресс доступен до перезагрузки страницы.'}}
 function tone(){if(!soundOn)return;try{ctx ||= new (window.AudioContext||window.webkitAudioContext)();ctx.resume();[523.25,659.25,783.99,1046.5].forEach((f,i)=>{const osc=ctx.createOscillator(),gain=ctx.createGain(),t=ctx.currentTime+i*.11;osc.type='sine';osc.frequency.value=f;gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(.12,t+.015);gain.gain.exponentialRampToValueAtTime(.001,t+.6);osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+.65)})}catch{soundOn=false;updateSound();$('hint').textContent='Звук недоступен в этом браузере.'}}
 function updateSound(){$('greeting').muted=!soundOn;$('gift-reaction').muted=!soundOn;$('task-reaction').muted=!soundOn;$('victory-reaction').muted=!soundOn;$('sound').textContent=soundOn?'♫ Звук включён':'♫ Звук выключен';$('sound').setAttribute('aria-pressed',String(soundOn));if(!$('greeting').paused)$('video-status').textContent=soundOn?'Слушай приветствие героя':'Видео без звука · включи звук кнопкой сверху'}
-function render(){let gifts=[...opened].filter(i=>i%2===0).length;$('gifts').textContent=gifts;$('progress-text').textContent=`Открыто ${opened.size} из 40 окошек`;$('percent').textContent=`${Math.round(opened.size/40*100)}%`;$('fill').style.width=opened.size/40*100+'%';document.querySelector('.track').setAttribute('aria-valuenow',opened.size);$('play-victory').hidden=!allGiftsOpened();$('grid').replaceChildren();for(let position=0;position<40;position++){const i=windowOrder[position];let gift=i%2===0,done=opened.has(i),b=document.createElement('button');b.className='window'+(gift?'':' task')+(done?' opened':'')+(done&&gift&&giftItems[Math.floor(i/2)]?' revealed-item':'');b.setAttribute('aria-label',`Сюрприз ${windowNumber(i)}${done?', уже открыто':''}${done&&gift&&giftItems[Math.floor(i/2)]?', '+giftItems[Math.floor(i/2)].title:''}`);b.innerHTML=`<span class="number">${String(position+1).padStart(2,'0')}</span><span class="present" aria-hidden="true"><img class="gift-image" src="${done?(gift&&giftItems[Math.floor(i/2)]?giftItems[Math.floor(i/2)].image:'assets/gift-open.png'):'assets/gift-closed.png'}" alt="" draggable="false"></span>`;b.dataset.windowId=String(i);b.onclick=()=>openWindow(i);$('grid').append(b)}}
+function render(){let gifts=[...opened].filter(i=>i%2===0).length;$('gifts').textContent=gifts;$('progress-text').textContent=`Открыто ${opened.size} из 40 окошек`;$('percent').textContent=`${Math.round(opened.size/40*100)}%`;$('fill').style.width=opened.size/40*100+'%';document.querySelector('.track').setAttribute('aria-valuenow',opened.size);$('play-victory').hidden=!allGiftsOpened();$('grid').replaceChildren();for(let position=0;position<40;position++){const i=windowOrder[position];let gift=i%2===0,done=opened.has(i),b=document.createElement('button');b.className='window'+(gift?'':' task')+(done?' opened':'')+(done&&gift&&giftItems[Math.floor(i/2)]?' revealed-item':'');b.setAttribute('aria-label',`Сюрприз ${windowNumber(i)}${done?', уже открыто':''}${done&&gift&&giftItems[Math.floor(i/2)]?', '+giftItems[Math.floor(i/2)].title:''}`);b.innerHTML=`<span class="number">${String(position+1).padStart(2,'0')}</span><span class="present" aria-hidden="true"><img class="gift-image" src="${done?(gift&&giftItems[Math.floor(i/2)]?giftItems[Math.floor(i/2)].image:'assets/Открытая коралловая коробка с золотым бантом.png'):'assets/Коралловый подарок с золотым бантом.png'}" alt="" draggable="false"></span>`;b.dataset.windowId=String(i);b.onclick=()=>openWindow(i);$('grid').append(b)}}
 function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;for(let i=0;i<25;i++){let e=document.createElement('span');e.className='confetti';e.textContent=['✦','❄','•'][i%3];e.style.left=Math.random()*100+'vw';e.style.color=['#e9c783','#fff','#96bba5'][i%3];e.style.animationDelay=Math.random()*.4+'s';document.body.append(e);setTimeout(()=>e.remove(),3000)}}
 let reactionActive=false,reactionVersion=0,reactionTimer;const unavailableReactions=new Set();
 function stopReaction(){reactionVersion++;clearTimeout(reactionTimer);document.querySelectorAll('.reaction-video').forEach(r=>{r.onended=null;r.onerror=null;r.pause();r.hidden=true});reactionActive=false;document.querySelectorAll('.window').forEach(b=>b.disabled=false)}
@@ -234,484 +234,343 @@ function playReaction(id,done){stopReaction();if(unavailableReactions.has(id)||!
 
 const tasks=[
   {
-    "title": "Пропущенные числа",
-    "text": "Запиши пропущенные числа: 10, __, 8, __, __, 5.",
+    "title": "1. Орешки для Щелкунчика",
+    "text": "Мари нашла 7 золотых орешков, а Щелкунчик — на 5 орешков больше. Сколько золотых орешков нашли Мари и Щелкунчик вместе?",
     "fields": [
       [
-        "Первый пропуск",
-        9
-      ],
-      [
-        "Второй пропуск",
-        7
-      ],
-      [
-        "Третий пропуск",
-        6
+        "Всего орешков",
+        19
       ]
     ]
   },
   {
-    "title": "Вычисли",
-    "text": "",
+    "title": "2. Часы Дроссельмейера",
+    "text": "Чтобы оживить волшебные часы Дроссельмейера, вычисли значения выражений.",
     "fields": [
       [
-        "8 − 2",
-        6
+        "16 − 8 + 3",
+        11
       ],
       [
-        "3 + 3",
-        6
+        "60 + 7",
+        67
       ],
       [
-        "7 − 1",
-        6
+        "9 + 8",
+        17
       ],
       [
-        "10 − 2",
-        8
-      ],
-      [
-        "5 + 3",
-        8
-      ]
-    ]
-  },
-  {
-    "title": "Заполни пропуски",
-    "text": "Вставь числа, чтобы равенства стали верными.",
-    "fields": [
-      [
-        "7 = 6 + □",
-        1
-      ],
-      [
-        "5 = 3 + □",
-        2
-      ],
-      [
-        "6 = □ − 1",
-        7
-      ]
-    ]
-  },
-  {
-    "title": "Реши задачу",
-    "text": "На полке стояло 6 книг. На неё поставили ещё 1 книгу. Сколько книг стало на полке?",
-    "fields": [
-      [
-        "Сколько книг стало?",
-        7
-      ]
-    ]
-  },
-  {
-    "title": "Пропущенные числа",
-    "text": "Запиши пропущенные числа: 9, 8, __, __, 5, __, 3.",
-    "fields": [
-      [
-        "Первый пропуск",
-        7
-      ],
-      [
-        "Второй пропуск",
-        6
-      ],
-      [
-        "Третий пропуск",
-        4
-      ]
-    ]
-  },
-  {
-    "title": "Вычисли",
-    "text": "",
-    "fields": [
-      [
-        "9 − 1",
-        8
-      ],
-      [
-        "4 + 3",
-        7
-      ],
-      [
-        "8 + 2",
+        "9 + 7 − 6",
         10
       ],
       [
-        "10 − 3",
-        7
+        "80 − 30",
+        50
       ],
       [
-        "7 + 2",
+        "13 − 4",
         9
       ]
     ]
   },
   {
-    "title": "Заполни пропуски",
-    "text": "Вставь числа, чтобы равенства стали верными.",
+    "title": "3. Весы Мышиного короля",
+    "text": "Мышиный король перепутал знаки в королевской книге. Сравни числа и величины, поставь знак >, = или <.",
     "fields": [
       [
-        "6 = 5 + □",
-        1
+        "4 + 6 □ 8",
+        ">"
       ],
       [
-        "7 = 2 + □",
+        "3 дм □ 6 см",
+        ">"
+      ],
+      [
+        "18 □ 8 + 9",
+        ">"
+      ],
+      [
+        "20 см □ 2 дм",
+        "="
+      ]
+    ],
+    "compare": true
+  },
+  {
+    "title": "4. Ленты для ёлки",
+    "text": "Мари украшает ёлку лентами. Первая лента длиной 8 см, а вторая на 3 см короче. Найди длину второй ленты. Ответ запиши в сантиметрах.",
+    "fields": [
+      [
+        "Длина, см",
         5
-      ],
-      [
-        "8 = □ − 1",
-        9
       ]
     ]
   },
   {
-    "title": "Реши задачу",
-    "text": "На приём к врачу записались 5 пациентов. Врач уже принял 2 пациента. Сколько пациентов осталось принять?",
+    "title": "5. Парад игрушек",
+    "text": "Дроссельмейер готовит парад игрушек с номерами: 5, 13, 9, 0, 2, 20, 4, 16, 18. Запиши номера в порядке возрастания. Разделяй числа пробелами или запятыми.",
     "fields": [
       [
-        "Сколько пациентов осталось принять?",
-        3
-      ]
-    ]
-  },
-  {
-    "title": "Расставь числа по порядку",
-    "text": "Даны числа: 6, 3, 9, 1, 5, 8, 6. Запиши их сначала в порядке увеличения, затем уменьшения. Разделяй числа запятыми или пробелами.",
-    "fields": [
-      [
-        "В порядке увеличения",
-        "1,3,5,6,6,8,9"
-      ],
-      [
-        "В порядке уменьшения",
-        "9,8,6,6,5,3,1"
+        "Числа по возрастанию",
+        "0,2,4,5,9,13,16,18,20"
       ]
     ],
     "sequence": true
   },
   {
-    "title": "Сравни",
-    "text": "Поставь знаки >, < или =.",
+    "title": "6. Заклинание Щелкунчика",
+    "text": "Помоги Щелкунчику восстановить волшебное заклинание: вставь пропущенные числа в равенства.",
     "fields": [
       [
-        "4 + 1 … 5",
-        "="
+        "6 + □ = 14",
+        8
       ],
       [
-        "2 + 1 … 4",
+        "8 + □ = 16",
+        8
+      ],
+      [
+        "5 + □ = 13",
+        8
+      ],
+      [
+        "□ + 5 = 11",
+        6
+      ],
+      [
+        "□ + 9 = 12",
+        3
+      ],
+      [
+        "□ + 7 = 15",
+        8
+      ]
+    ]
+  },
+  {
+    "title": "7. Отряд у дворца",
+    "text": "У ворот сказочного дворца стояло 4 игрушечных солдатика. Утром к ним пришли ещё 6 солдатиков. Сколько игрушечных солдатиков стало у ворот?",
+    "fields": [
+      [
+        "Солдатиков стало",
+        10
+      ]
+    ]
+  },
+  {
+    "title": "8. Бал в Конфетенбурге",
+    "text": "На балу в Конфетенбурге танцевали 9 мальчиков, а девочек на 4 больше. Сколько девочек танцевало на балу?",
+    "fields": [
+      [
+        "Девочек",
+        13
+      ]
+    ]
+  },
+  {
+    "title": "9. Счётная книга феи Драже",
+    "text": "Фея Драже просит помочь с подсчётами перед праздником. Реши примеры.",
+    "fields": [
+      [
+        "69 + 1",
+        70
+      ],
+      [
+        "5 + 30",
+        35
+      ],
+      [
+        "56 − 50",
+        6
+      ],
+      [
+        "40 − 1",
+        39
+      ],
+      [
+        "89 − 9",
+        80
+      ],
+      [
+        "60 − 20",
+        40
+      ]
+    ]
+  },
+  {
+    "title": "10. Мастерская Дроссельмейера",
+    "text": "В мастерской Дроссельмейера нужно сравнить длины деталей для игрушек. Поставь знак >, < или =.",
+    "fields": [
+      [
+        "8 м □ 7 дм",
+        ">"
+      ],
+      [
+        "1 м □ 98 см",
+        ">"
+      ],
+      [
+        "25 мм □ 4 см",
         "<"
       ],
       [
-        "2 − 1 … 2",
-        "<"
-      ],
-      [
-        "4 − 1 … 3",
-        "="
-      ],
-      [
-        "5 − 1 … 4",
-        "="
-      ],
-      [
-        "3 − 1 … 1",
+        "53 мм □ 5 см",
         ">"
       ]
     ],
     "compare": true
   },
   {
-    "title": "Звенья ломаной",
-    "text": "Сколько звеньев у ломаной на рисунке?",
+    "title": "11. Билеты в кукольный театр",
+    "text": "На билетах в кукольный театр стоят числа: 30, 5, 13, 55, 3, 35, 15, 50, 53, 33, 51. Выпиши в одну строку все двузначные числа, начиная с наименьшего. Разделяй числа пробелами или запятыми.",
     "fields": [
       [
-        "Сколько звеньев?",
-        5
+        "Двузначные числа",
+        "13,15,30,33,35,50,51,53,55"
       ]
     ],
-    "image": "assets/task-11.svg",
-    "imageAlt": "Незамкнутая ломаная линия"
+    "sequence": true
   },
   {
-    "title": "Вставь нужную цифру",
-    "text": "",
+    "title": "12. Пряничные кареты",
+    "text": "У дворца феи Драже стояло 12 пряничных карет. После того как несколько карет уехало, осталось 5 карет. Сколько пряничных карет уехало?",
     "fields": [
       [
-        "2 + □ = 5",
-        3
-      ],
-      [
-        "5 − □ = 3",
-        2
-      ],
-      [
-        "0 + □ = 6",
-        6
-      ],
-      [
-        "□ + 7 = 9",
-        2
-      ],
-      [
-        "7 − □ = 0",
+        "Карет уехало",
         7
-      ],
-      [
-        "□ − 3 = 3",
-        6
       ]
     ]
   },
   {
-    "title": "Назови линии",
-    "text": "Соотнеси фигуры с названиями. Рассмотри четыре линии слева направо и выбери название каждой.",
+    "title": "13. Тайна волшебного замка",
+    "text": "Чтобы открыть ворота волшебного замка Щелкунчика, найди значения выражений.",
     "fields": [
       [
-        "Линия 1 слева",
-        "Луч",
-        [
-          "Отрезок",
-          "Кривая",
-          "Прямая",
-          "Луч"
-        ]
-      ],
-      [
-        "Линия 2 слева",
-        "Прямая",
-        [
-          "Отрезок",
-          "Кривая",
-          "Прямая",
-          "Луч"
-        ]
-      ],
-      [
-        "Линия 3 слева",
-        "Отрезок",
-        [
-          "Отрезок",
-          "Кривая",
-          "Прямая",
-          "Луч"
-        ]
-      ],
-      [
-        "Линия 4 слева",
-        "Кривая",
-        [
-          "Отрезок",
-          "Кривая",
-          "Прямая",
-          "Луч"
-        ]
-      ]
-    ],
-    "image": "assets/task-13.png",
-    "imageAlt": "Четыре линии для сопоставления с названиями"
-  },
-  {
-    "title": "Продолжи ряд",
-    "text": "Найди закономерность и заполни пропуски в каждом ряду.",
-    "fields": [
-      [
-        "1, □, 3, □, 5, 6, 7, 8: первый пропуск",
-        2
-      ],
-      [
-        "Второй пропуск",
+        "6 + 7 − 9",
         4
       ],
       [
-        "11, 9, 7, □, □, □: первый пропуск",
-        5
+        "15 − (3 + 5)",
+        7
       ],
       [
-        "Второй пропуск во втором ряду",
-        3
+        "10 + 3 − 4",
+        9
       ],
       [
-        "Третий пропуск во втором ряду",
-        1
+        "8 + (12 − 5)",
+        15
+      ],
+      [
+        "18 − 10 + 5",
+        13
+      ],
+      [
+        "9 + (13 − 7)",
+        15
       ]
     ]
   },
   {
-    "title": "Выбери знак",
-    "text": "Вставь нужный знак «+» или «−».",
+    "title": "14. Звёзды на ёлке",
+    "text": "Мари нашла ёлочные звёзды с числами: 48, 1, 14, 4, 40, 81, 8, 18, 84, 44, 80, 88. Выпиши все двузначные числа в порядке возрастания. Разделяй числа пробелами или запятыми.",
     "fields": [
       [
-        "2 … 3 = 5",
-        "+",
-        [
-          "+",
-          "−"
-        ]
-      ],
-      [
-        "6 … 2 = 4",
-        "−",
-        [
-          "+",
-          "−"
-        ]
-      ],
-      [
-        "7 … 1 = 8",
-        "+",
-        [
-          "+",
-          "−"
-        ]
-      ],
-      [
-        "8 … 2 = 6",
-        "−",
-        [
-          "+",
-          "−"
-        ]
+        "Двузначные числа",
+        "14,18,40,44,48,80,81,84,88"
       ]
-    ]
+    ],
+    "sequence": true
   },
   {
-    "title": "Реши задачу",
-    "text": "Во дворе играли 3 ребёнка. К ним пришли ещё 2 ребёнка. Сколько детей стало во дворе?",
+    "title": "15. Игрушечная конница",
+    "text": "В замке Щелкунчика стояло 6 игрушечных коней. Дроссельмейер принёс ещё 4 игрушечных коня. Сколько игрушечных коней стало в замке?",
     "fields": [
       [
-        "Сколько детей стало?",
-        5
-      ]
-    ]
-  },
-  {
-    "title": "Реши задачу",
-    "text": "В пруду плавали 5 утят. К ним подплыли ещё 3 утёнка. Сколько утят стало в пруду?",
-    "fields": [
-      [
-        "Сколько утят стало?",
-        8
-      ]
-    ]
-  },
-  {
-    "title": "Реши примеры",
-    "text": "",
-    "fields": [
-      [
-        "2 + 3",
-        5
-      ],
-      [
-        "5 − 2",
-        3
-      ],
-      [
-        "4 + 2",
-        6
-      ],
-      [
-        "4 − 2",
-        2
-      ]
-    ]
-  },
-  {
-    "title": "Заполни пропуски знаками",
-    "text": "Выбери «+» или «−», чтобы равенства стали верными.",
-    "fields": [
-      [
-        "6 … 3 = 3",
-        "−",
-        [
-          "+",
-          "−"
-        ]
-      ],
-      [
-        "6 … 2 = 4",
-        "−",
-        [
-          "+",
-          "−"
-        ]
-      ],
-      [
-        "3 … 1 = 2",
-        "−",
-        [
-          "+",
-          "−"
-        ]
-      ],
-      [
-        "2 … 2 = 4",
-        "+",
-        [
-          "+",
-          "−"
-        ]
-      ]
-    ]
-  },
-  {
-    "title": "Выполни действия",
-    "text": "Вычисли и запиши ответы.",
-    "fields": [
-      [
-        "7 + 1",
-        8
-      ],
-      [
-        "4 − 3",
-        1
-      ],
-      [
-        "6 − 1",
-        5
-      ],
-      [
-        "3 − 1",
-        2
-      ],
-      [
-        "9 + 1",
+        "Коней стало",
         10
+      ]
+    ]
+  },
+  {
+    "title": "16. Музыкальная шкатулка",
+    "text": "Реши примеры, чтобы помочь Мари завести музыкальную шкатулку Дроссельмейера.",
+    "fields": [
+      [
+        "8 + 9",
+        17
       ],
       [
-        "6 + 1",
-        7
+        "4 + 7",
+        11
       ],
       [
-        "2 + 2",
-        4
+        "(12 − 6) + 2",
+        8
       ],
       [
-        "5 − 2",
+        "13 − (3 + 7)",
         3
+      ]
+    ]
+  },
+  {
+    "title": "17. Тесьма для мундира",
+    "text": "Мари шьёт мундир Щелкунчику. Длина первого отрезка тесьмы 9 см, а второго на 2 см меньше. Найди длину второго отрезка тесьмы. Ответ запиши в сантиметрах.",
+    "fields": [
+      [
+        "Длина, см",
+        7
+      ]
+    ]
+  },
+  {
+    "title": "18. Загадки феи Драже",
+    "text": "Фея Драже приготовила загадки о длине и времени. Сравни величины и поставь знак >, < или =.",
+    "fields": [
+      [
+        "5 см □ 5 дм",
+        "<"
       ],
       [
-        "5 − 3",
-        2
+        "7 дм □ 17 см",
+        ">"
       ],
       [
-        "7 − 1",
-        6
+        "20 мм □ 12 см",
+        "<"
+      ],
+      [
+        "1 ч □ 100 мин",
+        "<"
+      ]
+    ],
+    "compare": true
+  },
+  {
+    "title": "19. Сундуки Мышиного короля",
+    "text": "Большой сундук Мышиного короля весил 20 кг, а маленький — 7 кг. На сколько килограммов маленький сундук легче большого?",
+    "fields": [
+      [
+        "Разница, кг",
+        13
+      ]
+    ]
+  },
+  {
+    "title": "20. Ленты для подарков",
+    "text": "Мари перевязывает подарки лентами. Длина второй ленты 6 см, а первой на 3 см больше. Найди длину первой ленты. Ответ запиши в сантиметрах.",
+    "fields": [
+      [
+        "Длина, см",
+        9
       ]
     ]
   }
 ];
-tasks[12].matching=true;delete tasks[12].image;tasks[12].title='Соедини линии с названиями';tasks[12].text='Выбери рисунок слева, затем название справа — или протяни соединение. Чтобы изменить ответ, соедини рисунок ещё раз.';
-tasks[0].gapRows=['10, {0}, 8, {1}, {2}, 5'];
-tasks[4].gapRows=['9, 8, {0}, {1}, 5, {2}, 3'];
-for(const n of [0,4])tasks[n].text='Запиши пропущенные числа прямо в окошках.';
-tasks[13].gapRows=['1, {0}, 3, {1}, 5, 6, 7, 8','11, 9, 7, {2}, {3}, {4}'];
 function placeSequenceGaps(task,form,controls){if(!task.gapRows)return;const rows=controls.map(input=>input.closest('.answer-row'));for(const template of task.gapRows){const sequence=document.createElement('div');sequence.className='number-sequence';for(const part of template.split(/(\{\d+\})/)){const match=part.match(/^\{(\d+)\}$/);if(match){const i=Number(match[1]),row=rows[i],input=controls[i];row.className='answer-row sequence-slot';row.replaceChildren(input);input.placeholder='';input.setAttribute('aria-label',task.fields[i][0]);sequence.append(row)}else if(part){const text=document.createElement('span');text.textContent=part;sequence.append(text)}}form.append(sequence)}}
-let taskProgress={};try{const t=JSON.parse(localStorage.getItem(key+'-tasks-grade1-v1')||'{}');if(t&&typeof t==='object'&&!Array.isArray(t))taskProgress=t}catch{}
-function storeTasks(){try{localStorage.setItem(key+'-tasks-grade1-v1',JSON.stringify(taskProgress))}catch{$('hint').textContent='Браузер не разрешает сохранение ответов.'}}
+let taskProgress={};try{const t=JSON.parse(localStorage.getItem(key+'-tasks-grade2-v1')||'{}');if(t&&typeof t==='object'&&!Array.isArray(t))taskProgress=t}catch{}
+function storeTasks(){try{localStorage.setItem(key+'-tasks-grade2-v1',JSON.stringify(taskProgress))}catch{$('hint').textContent='Браузер не разрешает сохранение ответов.'}}
 function normalizeAnswer(v){return String(v).trim().replace(/\s/g,'').replace(',','.').replace(/[−–]/g,'-').toLowerCase()}
 function buildScratchpad(n,form,controls,isDrawing){const details=document.createElement('section');details.className='scratchpad';const summary=document.createElement('h3');summary.className='scratch-title';summary.textContent='✎ Черновик';const toolbar=document.createElement('div');toolbar.className='scratch-tools';toolbar.setAttribute('role','group');toolbar.setAttribute('aria-label','Инструменты черновика');const pencil=document.createElement('button'),eraser=document.createElement('button'),clear=document.createElement('button');for(const b of [pencil,eraser,clear])b.type='button';pencil.textContent='✎ Карандаш';eraser.textContent='▱ Ластик';clear.textContent='🗑 Корзина';clear.setAttribute('aria-label','Очистить черновик этого задания');pencil.setAttribute('aria-pressed','true');eraser.setAttribute('aria-pressed','false');toolbar.append(pencil,eraser,clear);const canvas=document.createElement('canvas');canvas.width=800;canvas.height=300;canvas.setAttribute('aria-label','Черновик задания '+(n+1)+'. Рисуйте мышью, пальцем или стилусом.');const note=document.createElement('p');note.className='scratch-note';note.textContent=isDrawing?'Здесь можно выполнить чертёж. Чертёж проверяется самостоятельно.':'Для вычислений и заметок. Записи сохраняются отдельно для каждого задания.';details.append(summary,note,canvas,toolbar);form.append(details);const c=canvas.getContext('2d');c.lineCap='round';c.lineJoin='round';let tool='pencil',active=false,revision=0;function selectTool(next){tool=next;pencil.setAttribute('aria-pressed',String(next==='pencil'));eraser.setAttribute('aria-pressed',String(next==='eraser'));canvas.style.cursor=next==='eraser'?'cell':'crosshair'}pencil.onclick=()=>selectTool('pencil');eraser.onclick=()=>selectTool('eraser');const point=e=>{const r=canvas.getBoundingClientRect();return[(e.clientX-r.left)*canvas.width/r.width,(e.clientY-r.top)*canvas.height/r.height]};const persist=()=>{taskProgress[n]={...taskProgress[n],values:controls.map(e=>e.value),drawing:canvas.toDataURL()};storeTasks()};const drawing=taskProgress[n]?.drawing;if(typeof drawing==='string'&&drawing.startsWith('data:image/png;base64,')){const im=new Image();im.onload=()=>{if(revision===0)c.drawImage(im,0,0)};im.src=drawing}canvas.onpointerdown=e=>{e.preventDefault();revision++;active=true;canvas.setPointerCapture(e.pointerId);c.globalCompositeOperation=tool==='eraser'?'destination-out':'source-over';c.strokeStyle='#193d30';c.lineWidth=tool==='eraser'?30:3;const[x,y]=point(e);c.beginPath();c.moveTo(x,y);c.lineTo(x+.01,y+.01);c.stroke()};canvas.onpointermove=e=>{if(!active)return;e.preventDefault();c.lineTo(...point(e));c.stroke()};const finish=()=>{if(active){active=false;persist()}};canvas.onpointerup=canvas.onpointercancel=canvas.onlostpointercapture=finish;clear.onclick=()=>{revision++;active=false;c.clearRect(0,0,canvas.width,canvas.height);persist()};selectTool('pencil')}
 function buildLineMatching(task,answers,controls){

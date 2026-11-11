@@ -233,6 +233,33 @@ header{position:absolute;top:0;left:0;width:100%;z-index:4;border:0;background:t
  .scene .hint{margin:3px 0 0;padding:3px;font-size:9px}
 }
 
+/* Transparent gifts; Christmas colours belong to controls and task cards. */
+:root{--cream:#fffaf1;--gold:#fff0d6;--green:#284f3f;--muted:#f5e4d6}
+.scene .window,.scene .window.task,.scene .window.opened,.scene .window:hover{background:transparent;border:0;box-shadow:none}
+.brand{background:#96353d;border:1px solid #fff0d699;color:#fffaf1;box-shadow:0 3px 12px #60212822;text-shadow:none}
+.author-copy strong,.brand a.channel-name{color:#fffaf1;text-shadow:none}.brand a.channel-name:hover{color:#fff0d6}
+.header-actions .sound,.header-actions .reset{background:#284f3f;border:1px solid #fff0d699;color:#fffaf1;text-shadow:none;text-decoration:none}
+.header-actions .sound:hover,.header-actions .reset:hover{background:#396550}
+.scene .stats>div:first-child{background:#96353ded;border:1px solid #fff0d677;box-shadow:0 3px 12px #60212822}
+.scene .stats h2,.scene .stats p{color:#fffaf1!important;text-shadow:none!important}
+.scene .counter{background:#284f3f;border-color:#fff0d677;color:#fffaf1}.scene .counter strong,.scene .counter small{color:#fffaf1}
+.scene .progress-label b{background:#fffaf1;color:#96353d;text-shadow:none}.scene .track{background:#fffaf177}.fill{background:linear-gradient(90deg,#96353d,#cc625e)}
+.scene .window .number,.scene .window.opened .number{background:#96353d;color:#fffaf1;text-shadow:none}
+.scene .window.opened:after,.scene .hint{background:#284f3f;color:#fffaf1;text-shadow:none}
+#modal,#modal.task-card[open],#reset-confirm{background:#fffaf1;color:#96353d;border-color:#96353d66}
+#modal h2,#reset-confirm h2{color:#96353d}#modal p,#modal.task-card #modal-text,#reset-confirm p{color:#284f3f}
+#modal .modal-kicker,#modal.task-card .modal-kicker{color:#284f3f}
+.close,.check-task,#reset-confirm button[value="restart"]{background:#96353d;color:#fffaf1}
+.close:hover,.check-task:not(:disabled):hover{background:#7f2932}
+#modal.task-card #close{background:#96353d;color:#fffaf1;border-color:#96353d}
+#reset-confirm button{background:#fffaf1;color:#284f3f;border-color:#284f3f}
+#modal.task-card .answer-row input,#modal.task-card .answer-row select{background:#fffefb;color:#284f3f;border-color:#789482}
+#modal.task-card .answer-row input:focus,#modal.task-card .answer-row select:focus{outline:2px solid #284f3f;outline-offset:2px}
+#modal.task-card .scratch-title,#modal.task-card .answer-bar .answer-unit{color:#284f3f}
+.scratch-tools button{background:#fffaf1;color:#284f3f;border-color:#789482}.scratch-tools button[aria-pressed=true]{background:#284f3f;color:#fffaf1}
+#modal.task-card .task-feedback{color:#a72e39}#modal.task-card .task-feedback.success{color:#24613b}
+@media(max-width:700px){header{background:#96353d}.scene .panel{background:transparent}}
+
 </style>
 </head>
 <body>

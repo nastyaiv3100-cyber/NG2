@@ -260,6 +260,13 @@ header{position:absolute;top:0;left:0;width:100%;z-index:4;border:0;background:t
 #modal.task-card .task-feedback{color:#a72e39}#modal.task-card .task-feedback.success{color:#24613b}
 @media(max-width:700px){header{background:#96353d}.scene .panel{background:transparent}}
 
+
+/* Keep the heading on the scene and place cards below it. */
+.scene .stats>div:first-child{background:transparent;border:0;box-shadow:none;transform:translateX(20px)}
+.scene .stats h2,.scene .stats p{color:#54252b!important;text-shadow:none!important}
+@media(min-width:701px){#modal,#modal.task-card{top:17%;bottom:auto;max-height:calc(83% - 12px)}}
+@media(max-width:700px){.scene .stats>div:first-child{transform:translateX(8px)}}
+
 </style>
 </head>
 <body>

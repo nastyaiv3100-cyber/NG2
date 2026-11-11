@@ -186,7 +186,7 @@ header{position:absolute;top:0;left:0;width:100%;z-index:4;border:0;background:t
 #play-victory[hidden]{display:none}
 @container(min-width:370px) and (max-width:559px){#modal.task-card .task-answers .calculation-answer>span:first-child{flex-basis:80px}#modal.task-card .task-answers .inline-answer{gap:8px;font-size:17px}#modal.task-card .task-answers .inline-answer input,#modal.task-card .task-answers .inline-answer select{flex-basis:62px;width:62px}}
 /* A warm Christmas palette and a roomier collection of presents. */
-.scene .grid{grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:136px;gap:12px;flex:1 1 auto;overflow-y:auto;overflow-x:hidden;align-content:start;padding:8px 8px 16px;margin-top:14px;scrollbar-width:thin;scrollbar-color:#b45356 #f4e9dc}
+.scene .grid{grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:136px;gap:12px;flex:1 1 auto;overflow-y:hidden;overflow-x:hidden;align-content:start;padding:8px 8px 16px;margin-top:14px;scrollbar-width:thin;scrollbar-color:#b45356 #f4e9dc}
 .scene .window,.scene .window.task,.scene .window.opened{height:136px;min-height:136px;aspect-ratio:auto;padding:20px 2px 2px;border:1px solid #ead8c5;border-radius:16px;background:linear-gradient(145deg,#fffefa,#f5e9db);box-shadow:0 3px 7px #70402b0b;overflow:hidden}
 .scene .window:hover{background:#f2e0ce;border-color:#bc5a5a;transform:translateY(-2px)}
 .scene .window .present{width:100%;height:100%;min-height:0;margin:0;flex:1;filter:drop-shadow(0 5px 4px #67302422)}
@@ -210,11 +210,34 @@ header{position:absolute;top:0;left:0;width:100%;z-index:4;border:0;background:t
 /* The video remains visible behind the collection. */
 .scene .panel{background:transparent;border:0;box-shadow:none}
 
+
+/* All forty windows stay visible; the collection never scrolls. */
+.scene .grid{grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(5,minmax(0,1fr));grid-auto-rows:auto;flex:1 1 0;min-height:0;gap:8px 6px;overflow:hidden;align-content:stretch;padding:4px;margin-top:10px}
+.scene .window,.scene .window.task,.scene .window.opened{height:100%;min-height:0;padding:18px 0 0;border-radius:10px}
+.scene .window .present{height:0;flex:1;min-height:0;width:100%}
+.scene .window .number,.scene .window.opened .number{top:3px;left:4px;font-size:10px;padding:2px 4px}
+@media(max-width:700px){
+ html,body{height:100%;overflow:hidden}
+ header{position:relative;height:112px;box-sizing:border-box;gap:6px;padding:8px 12px;align-content:center}
+ main{height:calc(100svh - 112px)}
+ .scene{height:100%;min-height:0;display:flex;flex-direction:column;gap:0;padding:0}
+ .scene-video,.scene .reaction-video{height:18svh;min-height:0;flex:0 0 18svh;width:100%;object-fit:cover;object-position:center 40%;aspect-ratio:auto;transform:none}
+ .scene .reaction-video{position:absolute;top:0;left:0}
+ .character-area{display:none}
+ .scene .panel{flex:1;min-height:0;height:0;display:flex;flex-direction:column;padding:8px 8px 10px;margin:0;border-radius:0}
+ .scene .stats{flex-shrink:0}.scene .stats>div:first-child{padding:5px 8px}.scene .stats h2{font-size:19px}.scene .stats p{font-size:10px}
+ .scene .progress-label{margin:5px 0 3px;min-height:15px}.scene .track{flex-shrink:0}
+ .scene .grid{grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr));gap:4px;margin-top:6px;padding:0}
+ .scene .window,.scene .window.task,.scene .window.opened{height:100%;min-height:0;padding:10px 0 0;border-radius:7px}
+ .scene .window .number,.scene .window.opened .number{top:2px;left:3px;font-size:8px;padding:1px 3px}
+ .scene .hint{margin:3px 0 0;padding:3px;font-size:9px}
+}
+
 </style>
 </head>
 <body>
 <header><div class="brand" id="author-brand"><img class="author-photo" src="assets/Frame 78 (2)-no-bg-preview (carve.photos).png" alt="Эмблема канала Урок на Play"><div class="author-copy"><strong>Орлова А.Р.</strong><a class="channel-name" href="https://t.me/lesson_play" target="_blank" rel="noopener noreferrer">Урок на Play ↗</a></div></div><div class="header-actions"><button id="play-video" class="sound">▶ Приветствие</button><button class="sound" id="play-victory" hidden>🏆 Победа</button><button class="sound" id="sound" aria-pressed="false">♫ Звук выключен</button><button class="reset" id="reset" title="Сбросить открытые подарки">↻ Начать заново</button></div><p id="video-status" class="visually-hidden" aria-live="polite"></p></header>
-<main><div class="layout scene"><video id="greeting" class="scene-video" playsinline autoplay preload="auto" muted poster="assets/greeting-poster.jpg" aria-label="Новогоднее приветствие персонажа"><source src="assets/privet3.mp4" type="video/mp4"></video><video id="gift-reaction" class="scene-video reaction-video" playsinline preload="auto" muted hidden aria-label="Эльф открывает подарок"><source src="assets/ura3.mp4" type="video/mp4"></video><video id="task-reaction" class="scene-video reaction-video" playsinline preload="auto" muted hidden aria-label="Эльф предлагает задание"><source src="assets/zadanie.mp4" type="video/mp4"></video><video id="victory-reaction" class="scene-video reaction-video" playsinline preload="metadata" muted hidden aria-label="Эльф поздравляет с победой"><source src="assets/pobeda.mp4" type="video/mp4"></video><section class="character-area" aria-label="Персонаж и приветствие"></section><section class="panel" aria-label="Новогодние окошки"><div class="stats"><div><h2>Твои 40 чудес</h2><p>Выбирай подарок · листай вниз за новыми сюрпризами</p></div><div class="counter" aria-live="polite"><span class="counter-icon">🎁</span><div><strong id="gifts">0</strong><span style="font-size:12px;color:var(--muted)"> / 20</span><small>подарков открыто</small></div></div></div><div class="progress-label"><span id="progress-text" class="visually-hidden">Открыто 0 из 40 окошек</span><b id="percent">0%</b></div><div class="track" role="progressbar" aria-label="Открытые окошки" aria-valuemin="0" aria-valuemax="40" aria-valuenow="0"><div class="fill" id="fill"></div></div><div class="grid" id="grid"></div><dialog id="modal" aria-labelledby="modal-title"><div class="modal-icon" id="modal-icon"></div><img id="gift-item" alt="" hidden><div class="modal-kicker" id="modal-kicker"></div><h2 id="modal-title"></h2><p id="modal-text"></p><div id="task-content" hidden></div><button class="close" id="close">Чудесно!</button></dialog><p class="hint" id="hint" role="status" aria-live="polite"></p></section></div></main>
+<main><div class="layout scene"><video id="greeting" class="scene-video" playsinline autoplay preload="auto" muted poster="assets/greeting-poster.jpg" aria-label="Новогоднее приветствие персонажа"><source src="assets/privet3.mp4" type="video/mp4"></video><video id="gift-reaction" class="scene-video reaction-video" playsinline preload="auto" muted hidden aria-label="Эльф открывает подарок"><source src="assets/ura3.mp4" type="video/mp4"></video><video id="task-reaction" class="scene-video reaction-video" playsinline preload="auto" muted hidden aria-label="Эльф предлагает задание"><source src="assets/zadanie.mp4" type="video/mp4"></video><video id="victory-reaction" class="scene-video reaction-video" playsinline preload="metadata" muted hidden aria-label="Эльф поздравляет с победой"><source src="assets/pobeda.mp4" type="video/mp4"></video><section class="character-area" aria-label="Персонаж и приветствие"></section><section class="panel" aria-label="Новогодние окошки"><div class="stats"><div><h2>Твои 40 чудес</h2><p>Выбирай окошко — и открывай сюрприз</p></div><div class="counter" aria-live="polite"><span class="counter-icon">🎁</span><div><strong id="gifts">0</strong><span style="font-size:12px;color:var(--muted)"> / 20</span><small>подарков открыто</small></div></div></div><div class="progress-label"><span id="progress-text" class="visually-hidden">Открыто 0 из 40 окошек</span><b id="percent">0%</b></div><div class="track" role="progressbar" aria-label="Открытые окошки" aria-valuemin="0" aria-valuemax="40" aria-valuenow="0"><div class="fill" id="fill"></div></div><div class="grid" id="grid"></div><dialog id="modal" aria-labelledby="modal-title"><div class="modal-icon" id="modal-icon"></div><img id="gift-item" alt="" hidden><div class="modal-kicker" id="modal-kicker"></div><h2 id="modal-title"></h2><p id="modal-text"></p><div id="task-content" hidden></div><button class="close" id="close">Чудесно!</button></dialog><p class="hint" id="hint" role="status" aria-live="polite"></p></section></div></main>
 
 
 <dialog id="reset-confirm" aria-labelledby="reset-title"><h2 id="reset-title">Начать заново?</h2><p>Все коробки снова закроются, а прогресс обнулится.</p><form method="dialog"><button value="cancel" autofocus>Продолжить игру</button><button value="restart">Начать заново</button></form></dialog>

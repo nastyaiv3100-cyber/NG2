@@ -1399,163 +1399,170 @@ video.play().then(()=>{
   }
 });
 </script>
-  <script>
-(() => {
-  if (window.petersonLetterGridInstalled) return;
-  window.petersonLetterGridInstalled = true;
+  (() => {
+  if (window.petersonAllDecodersFixed) return;
+  window.petersonAllDecodersFixed = true;
+
+  const cityExamples = [
+    ["А: 115 + 285 =", 400],
+    ["Ь: 398 + 87 =", 485],
+    ["Л: 600 − 125 =", 475],
+    ["З: 503 − 314 =", 189],
+    ["У: 417 − 367 =", 50],
+    ["С: 468 − 459 =", 9],
+    ["Д: 316 − 73 =", 243]
+  ];
 
   const cityNumbers = [9, 50, 189, 243, 400, 475, 485];
   const cityLetters = [..."СУЗДАЛЬ"];
 
-  const wishNumbers = [
+  const wishExamples = [
+    ["М: 265 + 13 =", 278],
+    ["А: 744 − 201 =", 543],
+    ["Л: 300 − 53 =", 247],
+    ["Ж: 685 + 122 =", 807],
+    ["П: 570 − 16 =", 554],
+    ["У: 413 + 347 =", 760],
+    ["Х: 296 + 85 =", 381],
+    ["С: 139 + 661 =", 800],
+    ["Е: 927 − 349 =", 578]
+  ];
+
+  const codes = [
     [807, 578, 247, 543, 578, 278],
     [760, 800, 554, 578, 381, 543]
   ];
 
-  const wishLetters = [..."ЖЕЛАЕМУСПЕХА"];
+  const letters = [..."ЖЕЛАЕМУСПЕХА"];
 
-  // Сохраняем исходные примеры.
-  const cityCalculations = tasks[9].fields.slice(0, 7);
-  const wishCalculations = tasks[17].fields.slice(0, 9);
+  for (const n of [9, 10]) {
+    tasks[n] = {
+      title: "Расшифруй название города:",
+      text:
+        "Вычисли значения выражений.\n" +
+        "В верхний ряд окошек запиши результаты по возрастанию.\n" +
+        "Под каждым числом запиши соответствующую букву.",
+      fields: [
+        ...cityExamples.map(field => [...field]),
+        ...cityNumbers.flatMap((number, i) => [
+          ["Число " + (i + 1), number],
+          ["Буква " + (i + 1), cityLetters[i]]
+        ])
+      ]
+    };
+  }
 
-  tasks[9].text =
-    "Вычисли значения выражений.\n" +
-    "В верхний ряд окошек запиши результаты по возрастанию.\n" +
-    "Под каждым числом запиши соответствующую букву. " +
-    "Получится название города.";
+  for (const n of [17, 18]) {
+    tasks[n] = {
+      title: "Расшифруй пожелание:",
+      text:
+        "Вычисли значения выражений.\n" +
+        "Под каждым числом внизу запиши соответствующую букву.",
+      fields: [
+        ...wishExamples.map(field => [...field]),
+        ...letters.map((letter, i) => [
+          "Буква " + (i + 1), letter
+        ])
+      ]
+    };
+  }
 
-  tasks[9].fields = [
-    ...cityCalculations,
-    ...cityNumbers.flatMap((number, index) => [
-      ["Число " + (index + 1), number],
-      ["Буква " + (index + 1), cityLetters[index]]
-    ])
-  ];
+  for (const n of [9, 10, 17, 18]) {
+    const old = progress[n] || {};
 
-  tasks[17].text =
-    "Вычисли значения выражений.\n" +
-    "Под каждым числом запиши соответствующую букву.\n" +
-    "Получится пожелание из двух слов.";
-
-  tasks[17].fields = [
-    ...wishCalculations,
-    ...wishLetters.map((letter, index) => [
-      "Буква " + (index + 1),
-      letter
-    ])
-  ];
-
-  // Старые ответы на примеры сохраняются.
-  // Новые окошки нужно заполнить самостоятельно.
-  for (const [number, count] of [[9, 7], [17, 9]]) {
-    const previous = progress[number] || {};
-
-    if (previous.layout !== "letter-grid-v1") {
-      progress[number] = {
-        ...previous,
-        layout: "letter-grid-v1",
-        values: Array.isArray(previous.values)
-          ? previous.values.slice(0, count)
+    if (old.layout !== "all-decoders-v2") {
+      progress[n] = {
+        ...old,
+        layout: "all-decoders-v2",
+        solved: false,
+        values: Array.isArray(old.values)
+          ? old.values.slice(0, n < 17 ? 7 : 9)
           : [],
-        checked: Array.isArray(previous.checked)
-          ? previous.checked.slice(0, count)
-          : [],
-        solved: false
+        checked: []
       };
     }
   }
 
-  const previousCompletionText = completionText;
+  const oldCompletion = completionText;
 
   completionText = function(n) {
-    if (n === 9) {
-      return "Верно! Ты правильно расположил числа и составил слово СУЗДАЛЬ!";
+    if (n === 9 || n === 10) {
+      return "Верно! Ты составил слово СУЗДАЛЬ!";
     }
 
-    if (n === 17) {
-      return "Верно! Ты составил пожелание: ЖЕЛАЕМ УСПЕХА!";
+    if (n === 17 || n === 18) {
+      return "Верно! ЖЕЛАЕМ УСПЕХА!";
     }
 
-    return previousCompletionText(n);
+    return oldCompletion(n);
   };
 
-  function prepareCell(row, isLetter) {
+  function cell(row, letter) {
     row.className = "answer decoder-cell";
 
     const input = row.querySelector("input");
-
     input.placeholder = "";
-    input.inputMode = isLetter ? "text" : "numeric";
-    input.maxLength = isLetter ? 1 : 3;
-
-    if (isLetter) {
-      input.autocapitalize = "characters";
-    }
+    input.inputMode = letter ? "text" : "numeric";
+    input.maxLength = letter ? 1 : 3;
 
     return row;
   }
 
-  const previousShowTask = showTask;
+  const oldView = showTask;
 
   showTask = function(n) {
-    previousShowTask(n);
+    oldView(n);
 
-    if (n !== 9 && n !== 17) return;
+    if (![9, 10, 17, 18].includes(n)) return;
 
     const host = $("fields");
-    const rows = [...host.children];
+    const rows = [...host.querySelectorAll(".answer")];
+    const city = n === 9 || n === 10;
+    const count = city ? 7 : 9;
+
+    host.replaceChildren(...rows.slice(0, count));
 
     const note = document.createElement("p");
     note.className = "decoder-note";
+    note.textContent = city
+      ? "Сверху — числа по возрастанию, снизу — буквы."
+      : "Запиши буквы под числами.";
 
-    if (n === 9) {
-      note.textContent =
-        "Сверху — числа по возрастанию, снизу — буквы.";
+    host.append(note);
 
+    if (city) {
       const grid = document.createElement("div");
-grid.className = "decoder-grid city-grid";
+      grid.className = "decoder-grid city-grid";
 
-      for (let index = 0; index < 7; index++) {
+      for (let i = 0; i < 7; i++) {
         const column = document.createElement("div");
         column.className = "decoder-column";
 
-        const numberRow = rows[7 + index * 2];
-        const letterRow = rows[8 + index * 2];
-
         column.append(
-          prepareCell(numberRow, false),
-          prepareCell(letterRow, true)
+          cell(rows[7 + i * 2], false),
+          cell(rows[8 + i * 2], true)
         );
 
         grid.append(column);
       }
 
-      host.append(note, grid);
-    }
-
-    if (n === 17) {
-      note.textContent =
-        "Впиши буквы под числами: одна буква в каждом окошке.";
-
-      host.append(note);
-
-      wishNumbers.forEach((word, wordIndex) => {
+      host.append(grid);
+    } else {
+      codes.forEach((word, wordIndex) => {
         const grid = document.createElement("div");
         grid.className = "decoder-grid wish-grid";
 
-        word.forEach((number, letterIndex) => {
+        word.forEach((number, i) => {
           const column = document.createElement("div");
           column.className = "decoder-column";
 
-          const numberLabel = document.createElement("div");
-          numberLabel.className = "decoder-fixed-number";
-          numberLabel.textContent = String(number);
-
-          const row = rows[9 + wordIndex * 6 + letterIndex];
+          const label = document.createElement("div");
+          label.className = "decoder-fixed";
+          label.textContent = number;
 
           column.append(
-            numberLabel,
-            prepareCell(row, true)
+            label,
+            cell(rows[9 + wordIndex * 6 + i], true)
           );
 
           grid.append(column);
@@ -1570,18 +1577,17 @@ grid.className = "decoder-grid city-grid";
 
   style.textContent = `
     .decoder-note {
-      margin: 14px 0 4px;
       font-size: 18px;
       line-height: 1.4;
-      color: #244c39;
+      margin: 18px 0 10px;
     }
 
     .decoder-grid {
       display: grid;
+      gap: 6px;
       width: 100%;
       max-width: 620px;
-      gap: 8px;
-      margin: 8px 0 12px;
+      margin: 10px 0 18px;
     }
 
     .city-grid {
@@ -1592,17 +1598,9 @@ grid.className = "decoder-grid city-grid";
       grid-template-columns: repeat(6, minmax(0, 1fr));
     }
 
-    .decoder-column {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      min-width: 0;
-    }
-
     #fields .decoder-cell {
       display: block;
       position: relative;
-      min-width: 0;
       margin: 0;
     }
 
@@ -1622,25 +1620,31 @@ grid.className = "decoder-grid city-grid";
       width: 100%;
       min-width: 0;
       max-width: 100%;
-      height: 48px;
-      margin: 0;
+      height: 46px;
       padding: 4px 2px;
-      border-radius: 9px;
+      margin: 0;
       text-align: center;
       font-size: 22px;
-      font-weight: 700;
+    }
+
+    #fields .decoder-cell input[inputmode="text"] {
       text-transform: uppercase;
     }
 
-    .decoder-fixed-number {
+    .decoder-column {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .decoder-fixed {
       display: grid;
       place-items: center;
       height: 36px;
-      border-radius: 8px;
       background: #fffaf1b8;
-      color: #244c39;
-      font-size: 19px;
-      font-weight: 700;
+      border-radius: 8px;
+      font-size: 20px;
     }
 
     @media (max-width: 700px) {
@@ -1648,16 +1652,12 @@ grid.className = "decoder-grid city-grid";
         gap: 4px;
       }
 
-      .decoder-column {
-        gap: 5px;
-      }
-
       #fields .decoder-cell input {
-        height: 44px;
+        height: 42px;
         font-size: 18px;
       }
 
-      .decoder-fixed-number {
+      .decoder-fixed {
         font-size: 16px;
       }
     }

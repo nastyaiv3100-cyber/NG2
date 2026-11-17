@@ -1399,5 +1399,273 @@ video.play().then(()=>{
   }
 });
 </script>
+  <script>
+(() => {
+  if (window.petersonLetterGridInstalled) return;
+  window.petersonLetterGridInstalled = true;
+
+  const cityNumbers = [9, 50, 189, 243, 400, 475, 485];
+  const cityLetters = [..."СУЗДАЛЬ"];
+
+  const wishNumbers = [
+    [807, 578, 247, 543, 578, 278],
+    [760, 800, 554, 578, 381, 543]
+  ];
+
+  const wishLetters = [..."ЖЕЛАЕМУСПЕХА"];
+
+  // Сохраняем исходные примеры.
+  const cityCalculations = tasks[9].fields.slice(0, 7);
+  const wishCalculations = tasks[17].fields.slice(0, 9);
+
+  tasks[9].text =
+    "Вычисли значения выражений.\n" +
+    "В верхний ряд окошек запиши результаты по возрастанию.\n" +
+    "Под каждым числом запиши соответствующую букву. " +
+    "Получится название города.";
+
+  tasks[9].fields = [
+    ...cityCalculations,
+    ...cityNumbers.flatMap((number, index) => [
+      ["Число " + (index + 1), number],
+      ["Буква " + (index + 1), cityLetters[index]]
+    ])
+  ];
+
+  tasks[17].text =
+    "Вычисли значения выражений.\n" +
+    "Под каждым числом запиши соответствующую букву.\n" +
+    "Получится пожелание из двух слов.";
+
+  tasks[17].fields = [
+    ...wishCalculations,
+    ...wishLetters.map((letter, index) => [
+      "Буква " + (index + 1),
+      letter
+    ])
+  ];
+
+  // Старые ответы на примеры сохраняются.
+  // Новые окошки нужно заполнить самостоятельно.
+  for (const [number, count] of [[9, 7], [17, 9]]) {
+    const previous = progress[number] || {};
+
+    if (previous.layout !== "letter-grid-v1") {
+      progress[number] = {
+        ...previous,
+        layout: "letter-grid-v1",
+        values: Array.isArray(previous.values)
+          ? previous.values.slice(0, count)
+          : [],
+        checked: Array.isArray(previous.checked)
+          ? previous.checked.slice(0, count)
+          : [],
+        solved: false
+      };
+    }
+  }
+
+  const previousCompletionText = completionText;
+
+  completionText = function(n) {
+    if (n === 9) {
+      return "Верно! Ты правильно расположил числа и составил слово СУЗДАЛЬ!";
+    }
+
+    if (n === 17) {
+      return "Верно! Ты составил пожелание: ЖЕЛАЕМ УСПЕХА!";
+    }
+
+    return previousCompletionText(n);
+  };
+
+  function prepareCell(row, isLetter) {
+    row.className = "answer decoder-cell";
+
+    const input = row.querySelector("input");
+
+    input.placeholder = "";
+    input.inputMode = isLetter ? "text" : "numeric";
+    input.maxLength = isLetter ? 1 : 3;
+
+    if (isLetter) {
+      input.autocapitalize = "characters";
+    }
+
+    return row;
+  }
+
+  const previousShowTask = showTask;
+
+  showTask = function(n) {
+    previousShowTask(n);
+
+    if (n !== 9 && n !== 17) return;
+
+    const host = $("fields");
+    const rows = [...host.children];
+
+    const note = document.createElement("p");
+    note.className = "decoder-note";
+
+    if (n === 9) {
+      note.textContent =
+        "Сверху — числа по возрастанию, снизу — буквы.";
+
+      const grid = document.createElement("div");
+grid.className = "decoder-grid city-grid";
+
+      for (let index = 0; index < 7; index++) {
+        const column = document.createElement("div");
+        column.className = "decoder-column";
+
+        const numberRow = rows[7 + index * 2];
+        const letterRow = rows[8 + index * 2];
+
+        column.append(
+          prepareCell(numberRow, false),
+          prepareCell(letterRow, true)
+        );
+
+        grid.append(column);
+      }
+
+      host.append(note, grid);
+    }
+
+    if (n === 17) {
+      note.textContent =
+        "Впиши буквы под числами: одна буква в каждом окошке.";
+
+      host.append(note);
+
+      wishNumbers.forEach((word, wordIndex) => {
+        const grid = document.createElement("div");
+        grid.className = "decoder-grid wish-grid";
+
+        word.forEach((number, letterIndex) => {
+          const column = document.createElement("div");
+          column.className = "decoder-column";
+
+          const numberLabel = document.createElement("div");
+          numberLabel.className = "decoder-fixed-number";
+          numberLabel.textContent = String(number);
+
+          const row = rows[9 + wordIndex * 6 + letterIndex];
+
+          column.append(
+            numberLabel,
+            prepareCell(row, true)
+          );
+
+          grid.append(column);
+        });
+
+        host.append(grid);
+      });
+    }
+  };
+
+  const style = document.createElement("style");
+
+  style.textContent = `
+    .decoder-note {
+      margin: 14px 0 4px;
+      font-size: 18px;
+      line-height: 1.4;
+      color: #244c39;
+    }
+
+    .decoder-grid {
+      display: grid;
+      width: 100%;
+      max-width: 620px;
+      gap: 8px;
+      margin: 8px 0 12px;
+    }
+
+    .city-grid {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    .wish-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .decoder-column {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    #fields .decoder-cell {
+      display: block;
+      position: relative;
+      min-width: 0;
+      margin: 0;
+    }
+
+    #fields .decoder-cell > span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      min-width: 0;
+      padding: 0;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    #fields .decoder-cell input {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      height: 48px;
+      margin: 0;
+      padding: 4px 2px;
+      border-radius: 9px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .decoder-fixed-number {
+      display: grid;
+      place-items: center;
+      height: 36px;
+      border-radius: 8px;
+      background: #fffaf1b8;
+      color: #244c39;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 700px) {
+      .decoder-grid {
+        gap: 4px;
+      }
+
+      .decoder-column {
+        gap: 5px;
+      }
+
+      #fields .decoder-cell input {
+        height: 44px;
+        font-size: 18px;
+      }
+
+      .decoder-fixed-number {
+        font-size: 16px;
+      }
+    }
+  `;
+
+  document.head.append(style);
+  save();
+})();
+</script>
 </body>
 </html>

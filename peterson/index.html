@@ -1,0 +1,1001 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Твои 40 чудес — задания по программе Л. Г. Петерсон</title>
+<style>
+:root{
+  --red:#96353d;
+  --red-dark:#742630;
+  --cream:#fffaf1;
+  --green:#244c39;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{
+  height:100vh;height:100dvh;
+  display:flex;flex-direction:column;overflow:hidden;
+  font-family:Arial,sans-serif;color:var(--green);
+  background:#c99c76 url("../assets/greeting-poster.jpg") center/cover no-repeat;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{
+  outline:3px solid var(--green);outline-offset:3px;
+}
+button:disabled{cursor:default;opacity:.65}
+#stage{position:fixed;inset:0;z-index:-1}
+#video{
+  display:block;width:100%;height:100%;object-fit:fill;
+}
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;padding:14px 24px;flex-shrink:0;
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 13px;border-radius:18px;
+  background:var(--red);color:var(--cream);
+  border:1px solid #fffaf18c;
+}
+.brand img{width:42px;height:42px;object-fit:contain}
+.brand strong{display:block;font-size:16px}
+.brand a{
+  display:block;margin-top:4px;
+  color:var(--cream);font-size:13px;text-underline-offset:3px;
+}
+.actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.pill{
+  border:1px solid #fffaf18c;border-radius:28px;
+  background:var(--red);color:var(--cream);
+  padding:11px 16px;font-size:13px;font-weight:700;
+}
+.pill:hover,.primary:hover{background:var(--red-dark)}
+main{
+  flex:1;min-height:0;display:grid;
+  grid-template-columns:1fr 1fr;gap:24px;
+  padding:8px 24px 22px;
+}
+.character-space{min-width:0}
+.board{
+  position:relative;min-height:0;min-width:0;
+  display:flex;flex-direction:column;background:transparent;
+}
+.topline{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;flex-shrink:0;
+}
+.heading{flex:1;text-align:center;padding-left:20px}
+.heading h1{
+  font-family:Georgia,serif;
+  color:#54252b;font-size:clamp(24px,2.2vw,36px);
+  margin:3px 0 6px;
+}
+.heading p{
+  color:#54252b;font-family:Georgia,serif;font-style:italic;
+  font-weight:700;font-size:14px;margin:0;line-height:1.4;
+}
+.counter{
+  flex-shrink:0;background:var(--red);color:var(--cream);
+  border:1px solid #fffaf18c;border-radius:14px;
+  padding:10px 13px;font-size:17px;
+}
+.counter small{display:block;font-size:10px;margin-top:4px}
+.progress-line{
+  display:flex;align-items:center;gap:10px;
+  margin-top:12px;flex-shrink:0;
+}
+.track{height:5px;background:#fffaf170;border-radius:8px;flex:1;overflow:hidden}
+#fill{height:100%;width:0;background:var(--red);transition:width .25s}
+#percent{
+  background:var(--cream);color:var(--red);
+  border-radius:7px;padding:3px 7px;font-size:12px;font-weight:700;
+}
+.windows{
+  flex:1;min-height:0;display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  grid-template-rows:repeat(5,minmax(0,1fr));
+  gap:7px 5px;margin-top:10px;overflow:hidden;
+}
+.window{
+  position:relative;min-width:0;min-height:0;
+  display:flex;align-items:center;justify-content:center;
+  padding:16px 0 0;background:transparent;border:0;
+  box-shadow:none;border-radius:8px;
+}
+.window img{
+  display:block;width:100%;height:100%;min-height:0;
+  object-fit:contain;transform:scale(1.28);
+  filter:drop-shadow(0 4px 3px #63301d30);
+  transition:transform .2s;
+}
+.window:hover img{transform:scale(1.36)}
+.number{
+  position:absolute;top:2px;left:3px;z-index:1;
+  padding:2px 5px;background:var(--red);color:var(--cream);
+  border-radius:6px;font-size:11px;font-weight:700;
+}
+.window.opened:after{
+  content:"✓";position:absolute;top:2px;right:2px;
+  background:var(--green);color:white;border-radius:50%;
+  font-size:10px;padding:1px 3px;
+}
+.window.revealed img{transform:scale(1)}
+#status{
+  position:fixed;left:24px;bottom:7px;max-width:45%;
+  padding:3px 7px;border-radius:8px;background:#fffaf1cc;
+  color:var(--green);font-size:11px;pointer-events:none;
+}
+#status:empty{display:none}
+.glass{
+  background:linear-gradient(135deg,#fffaf1bd,#fffaf178 55%,#fffaf1a3);
+  backdrop-filter:blur(18px) saturate(1.15);
+  -webkit-backdrop-filter:blur(18px) saturate(1.15);
+  border:1px solid #fffaf1c9;
+  box-shadow:inset 0 1px 0 #ffffffd9,0 18px 45px #54252b28;
+  border-radius:23px;
+}
+#card{
+  position:fixed;left:51%;right:24px;top:32vh;
+  max-height:calc(68vh - 24px);
+  max-height:calc(68dvh - 24px);
+  padding:26px;overflow:auto;z-index:5;
+  scrollbar-width:thin;scrollbar-color:var(--red) #fffaf1;
+}
+#card.gift,#card.victory{text-align:center}
+#card.gift{min-height:48vh}
+.card-close{
+  position:absolute;right:12px;top:12px;
+  width:34px;height:34px;border:0;border-radius:10px;
+  background:var(--red);color:var(--cream);font-size:25px;
+}
+#kicker{font-size:11px;letter-spacing:1.5px;color:var(--green);margin-bottom:10px}
+#card-title{
+  color:var(--red-dark);font-family:Georgia,serif;
+  font-size:30px;line-height:1.25;margin:0 28px 14px 0;
+}
+#card-text{font-size:22px;line-height:1.5;margin:0 0 18px}
+#gift-picture{
+  display:block;width:min(230px,60%);height:170px;
+  object-fit:contain;margin:0 auto 18px;
+  filter:drop-shadow(0 8px 8px #63301d25);
+}
+#fields{display:flex;flex-direction:column;gap:13px}
+.answer{
+  display:flex;align-items:center;gap:12px;
+  flex-wrap:wrap;font-size:22px;line-height:1.4;
+}
+.answer span{flex:1;min-width:110px}
+.answer input{
+  width:110px;max-width:100%;height:48px;
+  border:1px solid #789482;border-radius:9px;
+  background:#fffefbea;color:var(--green);
+  padding:8px 10px;font-size:22px;
+}
+.answer.text-answer{
+  display:flex;flex-direction:column;align-items:stretch;
+}
+.answer.text-answer span{flex:none}
+.answer.text-answer input{width:100%}
+.answer input[aria-invalid="true"]{
+  border:2px solid #b12e3b;background:#ffe0de;color:#7c1717;
+}
+.answer input[aria-invalid="false"]{
+  border:2px solid #329445;background:#dff5df;color:#155d27;
+  -webkit-text-fill-color:#155d27;opacity:1;
+}
+.scratch{border-top:1px solid #78948277;margin-top:18px;padding-top:12px}
+.scratch h3{font-size:18px;margin:0 0 9px}
+#scratchpad{
+  display:block;width:100%;height:120px;
+  border:1px solid #b4bba3;border-radius:10px;
+  background-color:#fffaf1;
+  background-image:linear-gradient(#78948222 1px,transparent 1px),
+    linear-gradient(90deg,#78948222 1px,transparent 1px);
+  background-size:20px 20px;touch-action:none;
+}
+.tools{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.tools button{
+  padding:7px 10px;background:#fffaf1;color:var(--green);
+  border:1px solid #789482;border-radius:8px;font-size:14px;
+}
+.tools button[aria-pressed="true"]{background:var(--green);color:white}
+.primary{
+  border:0;border-radius:26px;padding:12px 25px;
+  background:var(--red);color:var(--cream);
+  font-size:18px;font-weight:700;margin-top:16px;
+}
+#feedback{font-size:18px;line-height:1.4;margin:12px 0 0;color:#a72e39}
+#feedback.success{color:#24613b}
+#reset-dialog{
+  width:min(430px,calc(100% - 24px));padding:26px;color:var(--green);
+}
+#reset-dialog::backdrop{background:#321b184d;backdrop-filter:blur(4px)}
+#reset-dialog h2{font-family:Georgia,serif;color:var(--red)}
+#reset-dialog p{font-size:18px;line-height:1.5}
+#reset-dialog form{display:flex;flex-wrap:wrap;gap:8px}
+@media(max-width:1000px) and (min-width:701px){
+  header{padding:12px 16px}
+  main{gap:12px;padding:6px 16px 18px}
+  .heading{padding-left:8px}
+  .heading h1{font-size:23px}
+  .heading p{font-size:11px}
+  .counter{padding:8px;font-size:15px}
+  .pill{padding:10px 12px;font-size:11px}
+}
+@media(max-width:700px){
+  header{
+    gap:7px;flex-wrap:wrap;padding:8px 10px;
+    background:#96353de8;
+  }
+  .brand{padding:5px 8px}
+  .brand img{width:30px;height:30px}
+  .brand strong{font-size:13px}
+  .brand a{font-size:11px}
+  .actions{gap:5px}
+  .pill{font-size:10px;padding:8px 9px}
+  main{display:block;padding:16vh 8px 10px;min-height:0}
+  .character-space{display:none}
+  .board{height:100%}
+  .heading{padding-left:8px}
+  .heading h1{font-size:21px;margin:0 0 4px}
+  .heading p{font-size:10px}
+  .counter{padding:7px 9px;font-size:15px}
+  .counter small{font-size:9px}
+  .progress-line{margin-top:6px}
+  .windows{
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    grid-template-rows:repeat(8,minmax(0,1fr));
+    gap:3px;margin-top:6px;
+  }
+  .window{padding-top:10px}
+  .number{font-size:8px;padding:1px 3px}
+  #status{left:8px;bottom:2px;max-width:95%;font-size:10px}
+  #card{
+    left:10px;right:10px;top:24vh;
+    max-height:calc(76vh - 12px);
+    max-height:calc(76dvh - 12px);
+    padding:22px 17px;
+  }
+  #card-title{font-size:26px}
+  #card-text,.answer,.answer input{font-size:20px}
+  .answer input{width:95px}
+  #card.gift{min-height:0}
+  #gift-picture{height:140px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="stage" aria-hidden="true">
+  <video id="video" playsinline muted preload="auto"
+    poster="../assets/greeting-poster.jpg"></video>
+</div>
+
+<header>
+  <div class="brand">
+    <img src="../assets/Frame 78 (2)-no-bg-preview (carve.photos).png" alt="">
+    <div>
+      <strong>Орлова А.Р.</strong>
+      <a href="https://t.me/lesson_play" target="_blank" rel="noopener noreferrer">Урок на Play ↗</a>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="pill" id="greeting-button" type="button">▶ Приветствие</button>
+    <button class="pill" id="sound-button" type="button" aria-pressed="false">♫ Звук выключен</button>
+    <button class="pill" id="victory-button" type="button" hidden>🏆 Победа</button>
+    <button class="pill" id="reset-button" type="button">↻ Начать заново</button>
+  </div>
+</header>
+
+<main>
+  <div class="character-space"></div>
+  <section class="board" aria-label="Игра с заданиями по программе Л. Г. Петерсон">
+    <div class="topline">
+      <div class="heading">
+        <h1>Твои 40 чудес</h1>
+        <p>Выбирай окошко — и открывай сюрприз</p>
+      </div>
+      <div class="counter" aria-live="polite">
+        🎁 <strong id="gift-count">0</strong> / 20
+        <small>подарков открыто</small>
+      </div>
+    </div>
+    <div class="progress-line">
+      <div class="track" id="progress" role="progressbar"
+        aria-label="Открытые окошки" aria-valuemin="0"
+        aria-valuemax="40" aria-valuenow="0">
+        <div id="fill"></div>
+      </div>
+      <span id="percent">0%</span>
+    </div>
+    <div class="windows" id="windows"></div>
+  </section>
+</main>
+
+<section id="card" class="glass" role="dialog"
+  aria-labelledby="card-title" hidden>
+  <button id="card-close" class="card-close" type="button" aria-label="Закрыть">×</button>
+  <div id="kicker"></div>
+  <img id="gift-picture" alt="" hidden>
+  <h2 id="card-title"></h2>
+  <p id="card-text"></p>
+
+  <form id="task-form" novalidate hidden>
+    <div id="fields"></div>
+    <section class="scratch">
+      <h3>✎ Черновик</h3>
+      <canvas id="scratchpad" width="1000" height="300"
+        aria-label="Черновик для записи вычислений"></canvas>
+      <div class="tools">
+        <button type="button" id="pencil" aria-pressed="true">Карандаш</button>
+        <button type="button" id="eraser" aria-pressed="false">Ластик</button>
+        <button type="button" id="clear-scratch">Очистить</button>
+      </div>
+    </section>
+    <button class="primary" id="check-button" type="submit">Проверить</button>
+    <p id="feedback" role="status" aria-live="polite"></p>
+  </form>
+
+  <button class="primary" id="gift-close" type="button">Чудесно!</button>
+</section>
+
+<dialog id="reset-dialog" class="glass">
+  <h2>Начать заново?</h2>
+  <p>Все окошки закроются, ответы и рисунки в черновиках будут очищены.</p>
+  <form method="dialog">
+    <button class="pill" value="cancel">Продолжить игру</button>
+    <button class="pill" value="reset">Начать заново</button>
+  </form>
+</dialog>
+
+<p id="status" role="status" aria-live="polite"></p>
+
+<script>
+"use strict";
+
+const ASSETS = "../assets/";
+const STORAGE_KEY = "ng2-peterson-20-v1";
+const $ = id => document.getElementById(id);
+
+const tasks = [
+  {
+    title:"Выполни действия:",
+    text:"27 дм 4 см + 5 м 62 см. Вырази результат в метрах, дециметрах и сантиметрах.",
+    fields:[["Метры",8],["Дециметры",3],["Сантиметры",6]]
+  },
+  {
+    title:"Выполни действия:",
+    text:"9 м 6 см − 32 дм 5 см. Вырази результат в метрах, дециметрах и сантиметрах.",
+    fields:[["Метры",5],["Дециметры",8],["Сантиметры",1]]
+  },
+  {
+    title:"Выполни действия:",
+    text:"804 см − 1 м 6 дм 9 см. Вырази результат в метрах, дециметрах и сантиметрах.",
+    fields:[["Метры",6],["Дециметры",3],["Сантиметры",5]]
+  },
+  {
+    title:"Выполни действия:",
+    text:"15 дм 3 см + 4 м 31 см. Вырази результат в метрах, дециметрах и сантиметрах.",
+    fields:[["Метры",5],["Дециметры",8],["Сантиметры",4]]
+  },
+  {
+    title:"Реши уравнение:",
+    text:"x − 64 = 456. Найди x. Прокомментируй решение по компонентам действия.",
+    fields:[["x",520]]
+  },
+  {
+    title:"Реши уравнение:",
+    text:"39 + x = 510. Найди x. Прокомментируй решение по компонентам действия.",
+    fields:[["x",471]]
+  },
+  {
+    title:"Реши уравнение:",
+    text:"206 − x = 148. Найди x. Прокомментируй решение по компонентам действия.",
+    fields:[["x",58]]
+  },
+  {
+    title:"Реши задачу:",
+    text:"Петя придумал для Васи задачу: «Если к числу прибавить сначала 345, потом прибавить 37, а после этого вычесть 504, то получится 396. Какое это число?» Помоги Васе найти ответ.",
+    fields:[["Число",518]]
+  },
+  {
+    title:"Реши задачу:",
+    text:"В ларёк привезли 180 кг винограда и продали его за 3 дня. В первый день продали 56 кг, а во второй — на 8 кг больше. Сколько килограммов винограда продали в третий день?",
+    fields:[["Винограда в третий день, кг",60]]
+  },
+  {
+    title:"Выполни действия:",
+    text:"Вычисли значения выражений. Каждому результату соответствует буква.",
+    fields:[
+      ["А: 115 + 285",400],
+      ["Ь: 398 + 87",485],
+      ["Л: 600 − 125",475],
+      ["З: 503 − 314",189],
+      ["У: 417 − 367",50],
+      ["С: 468 − 459",9],
+      ["Д: 316 − 73",243]
+    ]
+  },
+  {
+    title:"Расшифруй название города:",
+    text:"Вычисли: А — 115 + 285; Ь — 398 + 87; Л — 600 − 125; З — 503 − 314; У — 417 − 367; С — 468 − 459; Д — 316 − 73. Расположи результаты в порядке возрастания и запиши соответствующие буквы подряд.",
+    textAnswer:true,
+    fields:[["Название города","Суздаль"]]
+  },
+  {
+    title:"Реши задачу:",
+    text:"В трамвае ехало 25 пассажиров. На остановке 8 из них вышли, а 4 вошли. Сколько пассажиров стало в трамвае?",
+    fields:[["Пассажиров",21]]
+  },
+  {
+    title:"Реши задачу:",
+yla    text:"В улье было 372 пчелы. Из улья вылетело 19 пчёл, а залетело 29. Сколько пчёл стало в улье?",
+    fields:[["Пчёл",382]]
+  },
+  {
+    title:"Вычисли столбиком:",
+    text:"385 − 124. Запиши вычисление в черновике и введи ответ.",
+    fields:[["Ответ",261]]
+  },
+  {
+    title:"Вычисли столбиком:",
+    text:"412 + 76. Запиши вычисление в черновике и введи ответ.",
+    fields:[["Ответ",488]]
+  },
+  {
+    title:"Вычисли столбиком:",
+    text:"520 − 109. Запиши вычисление в черновике и введи ответ.",
+    fields:[["Ответ",411]]
+  },
+  {
+    title:"Вычисли столбиком:",
+    text:"275 + 348. Запиши вычисление в черновике и введи ответ.",
+    fields:[["Ответ",623]]
+  },
+  {
+    title:"Выполни действия:",
+    text:"Вычисли значения выражений. Каждому результату соответствует буква.",
+    fields:[
+      ["М: 265 + 13",278],
+      ["А: 744 − 201",543],
+      ["Л: 300 − 53",247],
+      ["Ж: 685 + 122",807],
+      ["П: 570 − 16",554],
+      ["У: 413 + 347",760],
+      ["Х: 296 + 85",381],
+      ["С: 139 + 661",800],
+      ["Е: 927 − 349",578]
+    ]
+  },
+  {
+    title:"Расшифруй пожелание:",
+    text:"М — 265 + 13; А — 744 − 201; Л — 300 − 53; Ж — 685 + 122; П — 570 − 16; У — 413 + 347; Х — 296 + 85; С — 139 + 661; Е — 927 − 349. Замени числа соответствующими буквами: 807, 578, 247, 543, 578, 278 / 760, 800, 554, 578, 381, 543. Запиши два слова.",
+    textAnswer:true,
+    fields:[["Пожелание","Желаем успеха"]]
+  },
+  {
+    title:"Реши задачу:",
+    text:"На чемпионате школы по футболу Ваня забил 5 голов, Саша — на 2 гола меньше, чем Ваня, а Дима забил столько голов, сколько Ваня и Саша вместе. Сколько голов забили на чемпионате школы все три мальчика?",
+    fields:[["Всего голов",16]]
+  }
+];
+
+const gifts = [
+  ["Замок больших идей","Собери своё сказочное королевство!"],
+  ["Вперёд, к приключениям!","Придумай трассу для новой машинки."],
+  ["Робот — друг открытий","Какие приключения вы придумаете вместе?"],
+  ["Самокат хорошего настроения","Лови попутный ветер и собирай счастливые моменты!"],
+  ["Велосипед новых маршрутов","Открывай новые дорожки и отправляйся навстречу приключениям!"],
+  ["Приставка весёлых приключений","Зови друзей и радуйся общим победам!"],
+  ["Наушники любимых мелодий","Слушай любимые песни, сказки и истории."],
+  ["Смартфон тёплых встреч","Сохраняй счастливые моменты и делись улыбками."],
+  ["Часы счастливых минут","Самое время для новогодних чудес!"],
+  ["Планшет для больших идей","Рисуй, придумывай и узнавай новое!"],
+  ["Герой блочных приключений","Построй свой удивительный мир."],
+  ["Дракончик тёплых объятий","Пусть рядом всегда будет добрый друг!"],
+  ["Книга удивительных историй","Открой книгу и отправляйся в путешествие."],
+  ["Коробка сладких радостей","Пусть этот день будет особенно сладким!"],
+  ["Новогодний сюрприз","Ещё один подарок в твоей коллекции!"],
+  ["Подарок для новых открытий","Продолжай удивляться и пробовать новое!"],
+  ["Сюрприз для хорошего настроения","Пусть поводов для улыбки станет больше!"],
+  ["Маленькое новогоднее чудо","Пусть сбываются добрые желания!"],
+  ["Подарок для мечтателя","Самые интересные приключения ещё впереди!"],
+  ["Последний подарок","Ты собрал всю новогоднюю коллекцию!"]
+];
+
+if(tasks.length!==20 || gifts.length!==20){
+  throw new Error("В игре должно быть 20 заданий и 20 подарков.");
+}
+
+let saved = {};
+try{
+  const value = JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
+  if(value && typeof value==="object") saved=value;
+}catch{}
+
+const opened = new Set(
+  Array.isArray(saved.opened)
+    ? saved.opened.filter(n=>Number.isInteger(n)&&n>=0&&n<40)
+    : []
+);
+let progress = saved.progress && typeof saved.progress==="object"
+  ? saved.progress : {};
+let soundOn = saved.soundOn===true;
+let victoryPlayed = saved.victoryPlayed===true;
+let busy=false;
+let currentTask=null;
+let lastWindow=null;
+let drawingVersion=0;
+let activeDrawing=false;
+let erasing=false;
+
+const video=$("video");
+const canvas=$("scratchpad");
+const pen=canvas.getContext("2d");
+let lastPoint=null;
+
+function save(){
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify({
+      opened:[...opened],progress,soundOn,victoryPlayed
+    }));
+  }catch{
+    $("status").textContent="Браузер не разрешает сохранять прогресс.";
+  }
+}
+
+function giftCount(){
+  return [...opened].filter(n=>n%2===0).length;
+}
+
+function render(){
+  const host=$("windows");
+  host.replaceChildren();
+
+  for(let i=0;i<40;i++){
+    const gift=i%2===0;
+    const n=Math.floor(i/2);
+    const done=opened.has(i);
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="window"+(done?" opened":"")+(done&&gift?" revealed":"");
+    button.dataset.index=String(i);
+    button.disabled=busy;
+    button.setAttribute("aria-label",
+      `Окошко ${i+1}: ${gift?"подарок":"задание"}${done?", уже открыто":""}`
+    );
+
+    const number=document.createElement("span");
+    number.className="number";
+    number.textContent=String(i+1).padStart(2,"0");
+
+    const image=document.createElement("img");
+    image.alt="";
+    image.draggable=false;
+    image.src=ASSETS+(
+      done
+        ? gift
+          ? `${n+1}.png`
+          : "Открытая коралловая коробка с золотым бантом.png"
+        : "Коралловый подарок с золотым бантом.png"
+    );
+
+    button.append(number,image);
+    button.addEventListener("click",()=>openWindow(i));
+    host.append(button);
+  }
+
+  $("gift-count").textContent=String(giftCount());
+  $("percent").textContent=Math.round(opened.size/40*100)+"%";
+  $("fill").style.width=(opened.size/40*100)+"%";
+  $("progress").setAttribute("aria-valuenow",String(opened.size));
+  $("victory-button").hidden=giftCount()!==20;
+}
+
+function setBusy(value){
+  busy=value;
+  document.querySelectorAll(".window").forEach(button=>button.disabled=value);
+  $("greeting-button").disabled=value;
+  $("victory-button").disabled=value;
+  $("reset-button").disabled=value;
+}
+
+function updateSound(){
+  video.muted=!soundOn;
+  $("sound-button").setAttribute("aria-pressed",String(soundOn));
+  $("sound-button").textContent=soundOn?"♫ Звук включён":"♫ Звук выключен";
+}
+
+/* Карточка открывается только после ended.
+   При ошибке файла игра продолжает работу и сообщает о проблеме. */
+function playClip(file){
+  return new Promise(resolve=>{
+    setBusy(true);
+    $("card").hidden=true;
+
+    let finished=false;
+    const timeout=setTimeout(()=>finish(false),45000);
+
+    function finish(ok){
+      if(finished)return;
+      finished=true;
+      clearTimeout(timeout);
+      video.removeEventListener("ended",ended);
+      video.removeEventListener("error",failed);
+      video.pause();
+      setBusy(false);
+      $("greeting-button").textContent="▶ Приветствие";
+      if(!ok){
+        $("status").textContent=
+          "Не удалось воспроизвести видео. Проверьте файлы в папке assets.";
+      }else{
+        $("status").textContent="";
+      }
+      resolve(ok);
+    }
+    function ended(){finish(true)}
+    function failed(){finish(false)}
+
+    video.pause();
+promise_unused:
+    video.src=ASSETS+file;
+    video.loop=false;
+    video.muted=!soundOn;
+    video.addEventListener("ended",ended);
+    video.addEventListener("error",failed);
+    video.load();
+
+    const attempt=video.play();
+    if(attempt && typeof attempt.catch==="function"){
+      attempt.catch(()=>finish(false));
+    }
+  });
+}
+
+async function openWindow(i){
+  if(busy || !$("card").hidden)return;
+
+  lastWindow=i;
+  const fresh=!opened.has(i);
+  opened.add(i);
+  save();
+  render();
+
+  if(fresh){
+    await playClip(i%2===0?"ura3.mp4":"zadanie3.mp4");
+  }
+
+  showWindow(i);
+}
+
+function showWindow(i){
+  if(i%2===0)showGift(Math.floor(i/2),i);
+  else showTask(Math.floor(i/2),i);
+}
+
+function prepareCard(type,title,text,kicker){
+  $("card").className="glass "+type;
+  $("card-title").textContent=title;
+  $("card-text").textContent=text;
+  $("card-text").hidden=!text;
+  $("kicker").textContent=kicker;
+  $("gift-picture").hidden=true;
+  $("task-form").hidden=true;
+  $("gift-close").hidden=true;
+  $("card").hidden=false;
+}
+
+function showGift(n,i){
+  currentTask=null;
+  prepareCard("gift",gifts[n][0],gifts[n][1],`СЮРПРИЗ ${i+1}`);
+  $("gift-picture").src=ASSETS+`${n+1}.png`;
+  $("gift-picture").alt=gifts[n][0];
+  $("gift-picture").hidden=false;
+  $("gift-close").textContent="Чудесно!";
+  $("gift-close").hidden=false;
+  $("gift-close").focus({preventScroll:true});
+}
+
+function normalizeText(value){
+  return String(value).toLocaleLowerCase("ru")
+    .replace(/ё/g,"е")
+    .replace(/[^а-яa-z0-9]/g,"");
+}
+
+function correctAnswer(value,expected){
+  if(typeof expected==="number"){
+    const cleaned=String(value).trim();
+    return /^\d+$/.test(cleaned) && Number(cleaned)===expected;
+  }
+  return normalizeText(value)===normalizeText(expected);
+}
+
+function showTask(n,i){
+  currentTask=n;
+  const task=tasks[n];
+  const previous=progress[n] || {};
+  const values=Array.isArray(previous.values)?previous.values:[];
+
+  prepareCard("task",task.title,task.text,`ЗАДАНИЕ ${n+1} ИЗ 20`);
+  $("task-form").hidden=false;
+  $("fields").replaceChildren();
+
+  task.fields.forEach(([label],index)=>{
+    const row=document.createElement("label");
+    row.className="answer"+(task.textAnswer?" text-answer":"");
+
+    const caption=document.createElement("span");
+    caption.textContent=label;
+
+    const input=document.createElement("input");
+    input.type="text";
+    input.inputMode=task.textAnswer?"text":"numeric";
+    input.autocomplete="off";
+    input.spellcheck=false;
+    input.setAttribute("aria-label",label);
+    input.value=String(values[index]??"");
+    input.disabled=previous.solved===true;
+
+    if(previous.solved===true){
+      input.setAttribute("aria-invalid","false");
+    }else if(Array.isArray(previous.checked)
+      && typeof previous.checked[index]==="boolean"){
+      input.setAttribute("aria-invalid",String(!previous.checked[index]));
+    }
+
+    input.addEventListener("input",()=>{
+      input.removeAttribute("aria-invalid");
+      const inputs=[...$("fields").querySelectorAll("input")];
+      progress[n]={
+        ...progress[n],
+        values:inputs.map(element=>element.value),
+        checked:inputs.map(element=>{
+          const state=element.getAttribute("aria-invalid");
+          return state===null?null:state==="false";
+        }),
+        solved:false
+      };
+      $("feedback").textContent="";
+      save();
+    });
+
+    row.append(caption,input);
+    $("fields").append(row);
+  });
+
+  $("check-button").disabled=previous.solved===true;
+  $("check-button").textContent=previous.solved
+    ?"✓ Задание выполнено":"Проверить";
+  $("feedback").className=previous.solved?"success":"";
+  $("feedback").textContent=previous.solved
+    ?"Верно! Ответы сохранены.":"";
+  loadDrawing(previous.drawing);
+  $("card").scrollTop=0;
+  $("card-close").focus({preventScroll:true});
+}
+
+$("task-form").addEventListener("submit",event=>{
+  event.preventDefault();
+  if(currentTask===null)return;
+
+  const n=currentTask;
+  const inputs=[...$("fields").querySelectorAll("input")];
+  const checked=inputs.map((input,index)=>{
+    const ok=correctAnswer(input.value,tasks[n].fields[index][1]);
+    input.setAttribute("aria-invalid",String(!ok));
+    return ok;
+  });
+  const solved=checked.every(Boolean);
+
+  progress[n]={
+    ...progress[n],
+    values:inputs.map(input=>input.value),
+    checked,solved
+  };
+  save();
+
+  $("feedback").textContent=solved
+    ?"Верно! Задание выполнено."
+    :"Проверь выделенные ответы и попробуй ещё раз.";
+  $("feedback").className=solved?"success":"";
+
+  if(solved){
+    inputs.forEach(input=>input.disabled=true);
+    $("check-button").disabled=true;
+    $("check-button").textContent="✓ Задание выполнено";
+  }
+  $("feedback").scrollIntoView({block:"nearest",behavior:"smooth"});
+});
+
+async function closeCard(){
+  $("card").hidden=true;
+  currentTask=null;
+  activeDrawing=false;
+
+  if(lastWindow!==null){
+    const button=$("windows").querySelector(`[data-index="${lastWindow}"]`);
+    if(button)button.focus({preventScroll:true});
+  }
+  await checkVictory();
+}
+
+$("card-close").addEventListener("click",closeCard);
+$("gift-close").addEventListener("click",closeCard);
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape" && !$("card").hidden)closeCard();
+});
+
+async function checkVictory(force=false){
+  if(busy || !$("card").hidden || giftCount()!==20)return;
+  if(victoryPlayed && !force)return;
+
+  victoryPlayed=true;
+  save();
+  await playClip("pobeda.mp4");
+
+  currentTask=null;
+  prepareCard(
+    "victory",
+    "Поздравляем!",
+    "Все 20 подарков собраны! Если остались задания, их можно решить в своём темпе.",
+    "🏆 НОВОГОДНЯЯ ПОБЕДА"
+  );
+  $("gift-close").textContent="Продолжить игру";
+  $("gift-close").hidden=false;
+  $("gift-close").focus({preventScroll:true});
+}
+
+$("victory-button").addEventListener("click",()=>checkVictory(true));
+
+$("sound-button").addEventListener("click",()=>{
+  soundOn=!soundOn;
+  updateSound();
+  save();
+});
+
+$("greeting-button").addEventListener("click",()=>{
+  if(busy)return;
+  const greeting=video.currentSrc.includes("privet3.mp4");
+
+  if(greeting && !video.paused){
+    video.pause();
+    $("greeting-button").textContent="▶ Продолжить приветствие";
+    return;
+  }
+
+  if(!greeting || video.ended){
+    video.src=ASSETS+"privet3.mp4";
+    video.load();
+  }
+  video.muted=!soundOn;
+  video.play().then(()=>{
+    $("greeting-button").textContent="Ⅱ Пауза";
+  }).catch(()=>{
+    $("status").textContent="Нажмите «Приветствие» ещё раз для запуска видео.";
+  });
+});
+
+video.addEventListener("ended",()=>{
+  if(!busy)$("greeting-button").textContent="↻ Приветствие";
+});
+
+/* Черновик хранится отдельно для каждого задания. */
+function setTool(erase){
+  erasing=erase;
+  $("pencil").setAttribute("aria-pressed",String(!erase));
+  $("eraser").setAttribute("aria-pressed",String(erase));
+}
+$("pencil").addEventListener("click",()=>setTool(false));
+$("eraser").addEventListener("click",()=>setTool(true));
+
+function loadDrawing(data){
+  const version=++drawingVersion;
+  activeDrawing=false;
+  pen.clearRect(0,0,canvas.width,canvas.height);
+  setTool(false);
+
+  if(typeof data!=="string" || !data.startsWith("data:image/png;base64,"))return;
+  const image=new Image();
+  image.onload=()=>{
+    if(version!==drawingVersion)return;
+    pen.save();
+    pen.globalCompositeOperation="source-over";
+    pen.drawImage(image,0,0,canvas.width,canvas.height);
+    pen.restore();
+  };
+  image.src=data;
+}
+
+function saveDrawing(){
+  if(currentTask===null)return;
+  progress[currentTask]={
+    ...progress[currentTask],
+    drawing:canvas.toDataURL("image/png")
+  };
+  save();
+}
+
+function point(event){
+  const rect=canvas.getBoundingClientRect();
+  return {
+    x:(event.clientX-rect.left)*canvas.width/rect.width,
+    y:(event.clientY-rect.top)*canvas.height/rect.height
+  };
+}
+function drawPoint(from,to){
+  pen.globalCompositeOperation=erasing?"destination-out":"source-over";
+  pen.strokeStyle="#244c39";
+  pen.lineWidth=erasing?30:4;
+  pen.lineCap="round";
+  pen.lineJoin="round";
+  pen.beginPath();
+  pen.moveTo(from.x,from.y);
+  pen.lineTo(to.x,to.y);
+  pen.stroke();
+}
+canvas.addEventListener("pointerdown",event=>{
+  if(currentTask===null)return;
+  event.preventDefault();
+  drawingVersion++;
+  activeDrawing=true;
+  canvas.setPointerCapture(event.pointerId);
+  lastPoint=point(event);
+  drawPoint(lastPoint,{x:lastPoint.x+.1,y:lastPoint.y+.1});
+});
+canvas.addEventListener("pointermove",event=>{
+  if(!activeDrawing)return;
+  event.preventDefault();
+  const next=point(event);
+  drawPoint(lastPoint,next);
+  lastPoint=next;
+});
+function finishDrawing(){
+  if(!activeDrawing)return;
+  activeDrawing=false;
+  saveDrawing();
+}
+canvas.addEventListener("pointerup",finishDrawing);
+canvas.addEventListener("pointercancel",finishDrawing);
+canvas.addEventListener("lostpointercapture",finishDrawing);
+$("clear-scratch").addEventListener("click",()=>{
+  drawingVersion++;
+  activeDrawing=false;
+  pen.clearRect(0,0,canvas.width,canvas.height);
+  saveDrawing();
+});
+
+$("reset-button").addEventListener("click",()=>{
+  if(!busy)$("reset-dialog").showModal();
+});
+$("reset-dialog").addEventListener("close",()=>{
+  if($("reset-dialog").returnValue!=="reset")return;
+  opened.clear();
+  progress={};
+  victoryPlayed=false;
+  currentTask=null;
+  lastWindow=null;
+  drawingVersion++;
+  activeDrawing=false;
+  $("card").hidden=true;
+  video.pause();
+  $("status").textContent="";
+  $("greeting-button").textContent="▶ Приветствие";
+  save();
+  render();
+});
+
+render();
+updateSound();
+
+video.src=ASSETS+"privet3.mp4";
+video.play().then(()=>{
+  $("greeting-button").textContent="Ⅱ Пауза";
+}).catch(()=>{
+  $("greeting-button").textContent="▶ Приветствие";
+});
+</script>
+</body>
+</html>

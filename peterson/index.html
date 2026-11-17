@@ -1272,7 +1272,114 @@ $("reset-dialog").addEventListener("close",()=>{
   save();
   render();
 });
+// Дополняем карточку с названием города.
+tasks[9].text =
+  "Вычисли значения выражений.\n" +
+  "Запиши результаты в порядке возрастания.\n" +
+  "Затем составь из соответствующих букв название города и запиши его.";
 
+tasks[9].fields = [
+  ...tasks[9].fields.filter(field => typeof field[1] === "number"),
+  [
+    "Результаты по возрастанию",
+    {
+      kind: "orderedNumbers",
+      values: [9, 50, 189, 243, 400, 475, 485]
+    }
+  ],
+  ["Название города", "Суздаль"]
+];
+
+// Дополняем карточку с пожеланием.
+tasks[17].text =
+  "Вычисли значения выражений.\n" +
+  "Замени числа соответствующими буквами:\n" +
+  "807, 578, 247, 543, 578, 278\n" +
+  "760, 800, 554, 578, 381, 543\n" +
+  "Запиши получившееся пожелание.";
+
+tasks[17].fields = [
+  ...tasks[17].fields.filter(field => typeof field[1] === "number"),
+  ["Пожелание", "Желаем успеха"]
+];
+
+// Проверяем порядок чисел отдельно.
+// Допускаются пробелы, запятые и точки с запятой.
+const answerCheckBeforeWordFields = isCorrect;
+
+isCorrect = function(value, expected) {
+  if (
+    expected &&
+    typeof expected === "object" &&
+    !Array.isArray(expected) &&
+    expected.kind === "orderedNumbers"
+  ) {
+    const text = String(value).trim();
+
+    if (!/^\d+(?:[\s,;]+\d+)*$/.test(text)) {
+      return false;
+    }
+
+    const numbers = text.split(/[\s,;]+/).map(Number);
+
+    return (
+      numbers.length === expected.values.length &&
+      numbers.every((number, index) =>
+        number === expected.values[index]
+      )
+    );
+  }
+
+  return answerCheckBeforeWordFields(value, expected);
+};
+
+// Делаем новые поля широкими.
+const taskViewBeforeWordFields = showTask;
+
+showTask = function(n) {
+  taskViewBeforeWordFields(n);
+
+  if (n !== 9 && n !== 17) return;
+
+  const calculationCount = tasks[n].fields.filter(
+    field => typeof field[1] === "number"
+  ).length;
+
+  const rows = [...$("fields").querySelectorAll(".answer")];
+
+  rows.forEach((row, index) => {
+    if (index < calculationCount) return;
+
+    row.classList.add("text-answer");
+
+    const input = row.querySelector("input");
+    input.inputMode = "text";
+
+    input.placeholder =
+      n === 9 && index === calculationCount
+        ? "Числа через запятую или пробел"
+        : n === 9
+          ? "Введи название города"
+          : "Введи два слова";
+  });
+};
+
+// Итог показывается только после правильного заполнения
+// примеров, порядка чисел и самого слова.
+const completionBeforeWordFields = completionText;
+
+completionText = function(n) {
+  if (n === 9) {
+    return "Верно! Примеры решены, числа расположены правильно.\nНазвание города: СУЗДАЛЬ.";
+  }
+
+  if (n === 17) {
+    return "Верно! Примеры решены и пожелание расшифровано.\nЖЕЛАЕМ УСПЕХА!";
+  }
+
+  return completionBeforeWordFields(n);
+};
+  
 /* Запуск игры и сохранение порядка окошек. */
 render();
 updateSound();

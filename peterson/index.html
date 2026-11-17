@@ -5,12 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Твои 40 чудес — Петерсон</title>
 <style>
-:root{
-  --red:#96353d;
-  --red-dark:#742630;
-  --cream:#fffaf1;
-  --green:#244c39;
-}
+:root{--red:#96353d;--red-dark:#742630;--cream:#fffaf1;--green:#244c39}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%;margin:0}
@@ -26,24 +21,16 @@ body{
 }
 button,input{font:inherit}
 button{cursor:pointer}
+button:disabled{cursor:default;opacity:.65}
 button:focus-visible,input:focus-visible{
   outline:3px solid var(--green);
   outline-offset:3px;
 }
-button:disabled{cursor:default;opacity:.65}
-#stage{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-}
-#video{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:fill;
-}
+#stage{position:fixed;inset:0;z-index:0;pointer-events:none}
+#video{display:block;width:100%;height:100%;object-fit:fill}
 header{
+  position:relative;
+  z-index:1;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -61,11 +48,7 @@ header{
   color:var(--cream);
   border:1px solid #fffaf18c;
 }
-.brand img{
-  width:42px;
-  height:42px;
-  object-fit:contain;
-}
+.brand img{width:42px;height:42px;object-fit:contain}
 .brand strong{display:block;font-size:16px}
 .brand a{
   display:block;
@@ -74,12 +57,7 @@ header{
   font-size:13px;
   text-underline-offset:3px;
 }
-.actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  justify-content:flex-end;
-}
+.actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
 .pill{
   border:1px solid #fffaf18c;
   border-radius:28px;
@@ -91,6 +69,8 @@ header{
 }
 .pill:hover,.primary:hover{background:var(--red-dark)}
 main{
+  position:relative;
+  z-index:1;
   flex:1;
   min-height:0;
   display:grid;
@@ -114,12 +94,7 @@ main{
   gap:12px;
   flex-shrink:0;
 }
-.heading{
-  flex:1;
-  min-width:0;
-  text-align:center;
-  padding-left:20px;
-}
+.heading{flex:1;min-width:0;text-align:center;padding-left:20px}
 .heading h1{
   font-family:Georgia,serif;
   color:#54252b;
@@ -144,11 +119,7 @@ main{
   padding:10px 13px;
   font-size:17px;
 }
-.counter small{
-  display:block;
-  font-size:10px;
-  margin-top:4px;
-}
+.counter small{display:block;font-size:10px;margin-top:4px}
 .progress-line{
   display:flex;
   align-items:center;
@@ -163,15 +134,10 @@ main{
   flex:1;
   overflow:hidden;
 }
-#fill{
-  height:100%;
-  width:0;
-  background:var(--red);
-  transition:width .25s;
-}
+#fill{height:100%;width:0;background:var(--red);transition:width .25s}
 #percent{
   background:var(--cream);
-irana  color:var(--red);
+  color:var(--red);
   border-radius:7px;
   padding:3px 7px;
   font-size:12px;
@@ -237,12 +203,13 @@ irana  color:var(--red);
 .window.revealed img{transform:scale(1)}
 #status{
   position:fixed;
+  z-index:6;
   left:24px;
   bottom:7px;
   max-width:45%;
   padding:3px 7px;
   border-radius:8px;
-  background:#fffaf1cc;
+  background:#fffaf1dc;
   color:var(--green);
   font-size:11px;
   pointer-events:none;
@@ -298,6 +265,7 @@ irana  color:var(--red);
   margin:0 28px 14px 0;
 }
 #text{
+  white-space:pre-line;
   font-size:22px;
   line-height:1.5;
   margin:0 0 18px;
@@ -310,11 +278,7 @@ irana  color:var(--red);
   margin:0 auto 18px;
   filter:drop-shadow(0 8px 8px #63301d25);
 }
-#fields{
-  display:flex;
-  flex-direction:column;
-  gap:13px;
-}
+#fields{display:flex;flex-direction:column;gap:13px}
 .answer{
   display:flex;
   align-items:center;
@@ -335,13 +299,12 @@ irana  color:var(--red);
   padding:8px 10px;
   font-size:22px;
 }
-.answer.text-answer{
-  display:flex;
-  flex-direction:column;
-  align-items:stretch;
-}
+.answer.text-answer{flex-direction:column;align-items:stretch}
 .answer.text-answer span{flex:none}
 .answer.text-answer input{width:100%}
+.equation-answer{justify-content:flex-start}
+.equation-answer span{flex:0 0 auto;min-width:0}
+.equation-answer input{flex:0 1 360px;width:360px}
 .answer input[aria-invalid="true"]{
   border:2px solid #b12e3b;
   background:#ffe0de;
@@ -372,12 +335,7 @@ irana  color:var(--red);
   background-size:20px 20px;
   touch-action:none;
 }
-.tools{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin-top:8px;
-}
+.tools{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
 .tools button{
   padding:7px 10px;
   background:#fffaf1;
@@ -386,10 +344,7 @@ irana  color:var(--red);
   border-radius:8px;
   font-size:14px;
 }
-.tools button[aria-pressed="true"]{
-  background:var(--green);
-  color:white;
-}
+.tools button[aria-pressed="true"]{background:var(--green);color:white}
 .primary{
   border:0;
   border-radius:26px;
@@ -400,26 +355,15 @@ irana  color:var(--red);
   font-weight:700;
   margin-top:16px;
 }
-#feedback{
-  font-size:18px;
-  line-height:1.4;
-  margin:12px 0 0;
-  color:#a72e39;
-}
+#feedback{font-size:18px;line-height:1.4;margin:12px 0 0;color:#a72e39}
 #feedback.success{color:#24613b}
 #reset-dialog{
   width:min(430px,calc(100% - 24px));
   padding:26px;
   color:var(--green);
 }
-#reset-dialog::backdrop{
-  background:#321b184d;
-  backdrop-filter:blur(4px);
-}
-#reset-dialog h2{
-  font-family:Georgia,serif;
-  color:var(--red);
-}
+#reset-dialog::backdrop{background:#321b184d;backdrop-filter:blur(4px)}
+#reset-dialog h2{font-family:Georgia,serif;color:var(--red)}
 #reset-dialog p{font-size:18px;line-height:1.5}
 #reset-dialog form{display:flex;flex-wrap:wrap;gap:8px}
 @media(max-width:1000px) and (min-width:701px){
@@ -432,23 +376,14 @@ irana  color:var(--red);
   .pill{padding:10px 12px;font-size:11px}
 }
 @media(max-width:700px){
-  header{
-    gap:7px;
-    flex-wrap:wrap;
-    padding:8px 10px;
-    background:#96353de8;
-  }
+  header{gap:7px;flex-wrap:wrap;padding:8px 10px;background:#96353de8}
   .brand{padding:5px 8px}
   .brand img{width:30px;height:30px}
   .brand strong{font-size:13px}
   .brand a{font-size:11px}
   .actions{gap:5px}
   .pill{font-size:10px;padding:8px 9px}
-  main{
-    display:block;
-    padding:16vh 8px 10px;
-    min-height:0;
-  }
+  main{display:block;padding:16vh 8px 10px;min-height:0}
   .character-space{display:none}
   .board{height:100%}
   .heading{padding-left:8px}
@@ -465,12 +400,7 @@ irana  color:var(--red);
   }
   .window{padding-top:10px}
   .number{font-size:8px;padding:1px 3px}
-  #status{
-    left:8px;
-    bottom:2px;
-    max-width:95%;
-    font-size:10px;
-  }
+  #status{left:8px;bottom:2px;max-width:95%;font-size:10px}
   #card{
     left:10px;
     right:10px;
@@ -482,6 +412,7 @@ irana  color:var(--red);
   #title{font-size:26px}
   #text,.answer,.answer input{font-size:20px}
   .answer input{width:95px}
+  .equation-answer input{flex:1 1 180px;width:180px;min-width:0}
   #card.gift{min-height:0}
   #picture{height:140px}
 }
@@ -507,7 +438,6 @@ irana  color:var(--red);
       </a>
     </div>
   </div>
-
   <div class="actions">
     <button class="pill" id="greeting-button" type="button">▶ Приветствие</button>
     <button class="pill" id="sound-button" type="button" aria-pressed="false">
@@ -520,20 +450,17 @@ irana  color:var(--red);
 
 <main>
   <div class="character-space"></div>
-
   <section class="board" aria-label="Игра с заданиями по программе Л. Г. Петерсон">
     <div class="topline">
       <div class="heading">
         <h1>Твои 40 чудес</h1>
         <p>Выбирай окошко — и открывай сюрприз</p>
       </div>
-
       <div class="counter" aria-live="polite">
         🎁 <strong id="gift-count">0</strong> / 20
         <small>подарков открыто</small>
       </div>
     </div>
-
     <div class="progress-line">
       <div class="track" id="track" role="progressbar"
         aria-label="Открытые окошки"
@@ -542,40 +469,31 @@ irana  color:var(--red);
       </div>
       <span id="percent">0%</span>
     </div>
-
     <div class="windows" id="windows"></div>
   </section>
 </main>
 
-<section id="card" class="glass" role="dialog"
-  aria-labelledby="title" hidden>
-  <button id="card-close" class="card-close"
-    type="button" aria-label="Закрыть">×</button>
-
+<section id="card" class="glass" role="dialog" aria-labelledby="title" hidden>
+  <button id="card-close" class="card-close" type="button" aria-label="Закрыть">×</button>
   <div id="kicker"></div>
   <img id="picture" alt="" hidden>
   <h2 id="title"></h2>
   <p id="text"></p>
-
   <form id="form" novalidate hidden>
     <div id="fields"></div>
-
     <section class="scratch">
       <h3>✎ Черновик</h3>
       <canvas id="canvas" width="1000" height="300"
         aria-label="Черновик для записи вычислений"></canvas>
-
       <div class="tools">
         <button type="button" id="pencil" aria-pressed="true">Карандаш</button>
         <button type="button" id="eraser" aria-pressed="false">Ластик</button>
         <button type="button" id="clear">Очистить</button>
       </div>
     </section>
-
     <button class="primary" id="check" type="submit">Проверить</button>
     <p id="feedback" role="status" aria-live="polite"></p>
   </form>
-
   <button class="primary" id="gift-close" type="button">Чудесно!</button>
 </section>
 
@@ -596,38 +514,58 @@ irana  color:var(--red);
 const tasks=[
   {
     title:"Выполни действия:",
-    text:"27 дм 4 см + 5 м 62 см. Вырази результат в метрах, дециметрах и сантиметрах.",
+    text:"27 дм 4 см + 5 м 62 см =\nВырази результат в метрах, дециметрах и сантиметрах.",
     fields:[["Метры",8],["Дециметры",3],["Сантиметры",6]]
   },
   {
     title:"Выполни действия:",
-    text:"9 м 6 см − 32 дм 5 см. Вырази результат в метрах, дециметрах и сантиметрах.",
+    text:"9 м 6 см − 32 дм 5 см =\nВырази результат в метрах, дециметрах и сантиметрах.",
     fields:[["Метры",5],["Дециметры",8],["Сантиметры",1]]
   },
   {
     title:"Выполни действия:",
-    text:"804 см − 1 м 6 дм 9 см. Вырази результат в метрах, дециметрах и сантиметрах.",
+    text:"804 см − 1 м 6 дм 9 см =\nВырази результат в метрах, дециметрах и сантиметрах.",
     fields:[["Метры",6],["Дециметры",3],["Сантиметры",5]]
   },
   {
     title:"Выполни действия:",
-    text:"15 дм 3 см + 4 м 31 см. Вырази результат в метрах, дециметрах и сантиметрах.",
+    text:"15 дм 3 см + 4 м 31 см =\nВырази результат в метрах, дециметрах и сантиметрах.",
     fields:[["Метры",5],["Дециметры",8],["Сантиметры",4]]
   },
   {
     title:"Реши уравнение:",
-    text:"x − 64 = 456. Найди x. Объясни решение по компонентам действия.",
-    fields:[["x",520]]
+    text:"Найди x. Прокомментируй решение по компонентам действия.\n\nx − 64 = 456",
+    equation:true,
+    fields:[
+      ["x =",["456 + 64","64 + 456"]],
+      ["x =",520],
+      ["Проверка:",["520 − 64 = 456","456 = 520 − 64"]]
+    ]
   },
   {
     title:"Реши уравнение:",
-    text:"39 + x = 510. Найди x. Объясни решение по компонентам действия.",
-    fields:[["x",471]]
+    text:"Найди x. Прокомментируй решение по компонентам действия.\n\n39 + x = 510",
+    equation:true,
+    fields:[
+      ["x =",["510 − 39"]],
+      ["x =",471],
+      ["Проверка:",[
+        "39 + 471 = 510",
+        "471 + 39 = 510",
+        "510 = 39 + 471",
+        "510 = 471 + 39"
+      ]]
+    ]
   },
   {
     title:"Реши уравнение:",
-    text:"206 − x = 148. Найди x. Объясни решение по компонентам действия.",
-    fields:[["x",58]]
+    text:"Найди x. Прокомментируй решение по компонентам действия.\n\n206 − x = 148",
+    equation:true,
+    fields:[
+      ["x =",["206 − 148"]],
+      ["x =",58],
+      ["Проверка:",["206 − 58 = 148","148 = 206 − 58"]]
+    ]
   },
   {
     title:"Реши задачу:",
@@ -643,18 +581,18 @@ const tasks=[
     title:"Выполни действия:",
     text:"Вычисли значения выражений. Каждому результату соответствует буква.",
     fields:[
-      ["А: 115 + 285",400],
-      ["Ь: 398 + 87",485],
-      ["Л: 600 − 125",475],
-      ["З: 503 − 314",189],
-      ["У: 417 − 367",50],
-      ["С: 468 − 459",9],
-      ["Д: 316 − 73",243]
+      ["А: 115 + 285 =",400],
+      ["Ь: 398 + 87 =",485],
+      ["Л: 600 − 125 =",475],
+      ["З: 503 − 314 =",189],
+      ["У: 417 − 367 =",50],
+      ["С: 468 − 459 =",9],
+      ["Д: 316 − 73 =",243]
     ]
   },
   {
     title:"Расшифруй название города:",
-    text:"А — 115 + 285; Ь — 398 + 87; Л — 600 − 125; З — 503 − 314; У — 417 − 367; С — 468 − 459; Д — 316 − 73. Расположи результаты в порядке возрастания и запиши соответствующие буквы подряд.",
+    text:"А — 115 + 285\nЬ — 398 + 87\nЛ — 600 − 125\nЗ — 503 − 314\nУ — 417 − 367\nС — 468 − 459\nД — 316 − 73\n\nРасположи результаты в порядке возрастания и запиши соответствующие буквы подряд.",
     textAnswer:true,
     fields:[["Название города","Суздаль"]]
   },
@@ -670,42 +608,42 @@ const tasks=[
   },
   {
     title:"Вычисли столбиком:",
-    text:"385 − 124. Запиши вычисление в черновике и введи ответ.",
+    text:"385 − 124 =\nЗапиши вычисление в черновике и введи ответ.",
     fields:[["Ответ",261]]
   },
   {
     title:"Вычисли столбиком:",
-    text:"412 + 76. Запиши вычисление в черновике и введи ответ.",
+    text:"412 + 76 =\nЗапиши вычисление в черновике и введи ответ.",
     fields:[["Ответ",488]]
   },
   {
     title:"Вычисли столбиком:",
-    text:"520 − 109. Запиши вычисление в черновике и введи ответ.",
+    text:"520 − 109 =\nЗапиши вычисление в черновике и введи ответ.",
     fields:[["Ответ",411]]
   },
   {
     title:"Вычисли столбиком:",
-    text:"275 + 348. Запиши вычисление в черновике и введи ответ.",
+    text:"275 + 348 =\nЗапиши вычисление в черновике и введи ответ.",
     fields:[["Ответ",623]]
   },
   {
     title:"Выполни действия:",
     text:"Вычисли значения выражений. Каждому результату соответствует буква.",
     fields:[
-      ["М: 265 + 13",278],
-      ["А: 744 − 201",543],
-      ["Л: 300 − 53",247],
-      ["Ж: 685 + 122",807],
-      ["П: 570 − 16",554],
-      ["У: 413 + 347",760],
-      ["Х: 296 + 85",381],
-      ["С: 139 + 661",800],
-      ["Е: 927 − 349",578]
+      ["М: 265 + 13 =",278],
+      ["А: 744 − 201 =",543],
+      ["Л: 300 − 53 =",247],
+      ["Ж: 685 + 122 =",807],
+      ["П: 570 − 16 =",554],
+      ["У: 413 + 347 =",760],
+      ["Х: 296 + 85 =",381],
+      ["С: 139 + 661 =",800],
+      ["Е: 927 − 349 =",578]
     ]
   },
   {
     title:"Расшифруй пожелание:",
-    text:"М — 265 + 13; А — 744 − 201; Л — 300 − 53; Ж — 685 + 122; П — 570 − 16; У — 413 + 347; Х — 296 + 85; С — 139 + 661; Е — 927 − 349. Замени числа соответствующими буквами: 807, 578, 247, 543, 578, 278 / 760, 800, 554, 578, 381, 543. Запиши два слова.",
+    text:"М — 265 + 13\nА — 744 − 201\nЛ — 300 − 53\nЖ — 685 + 122\nП — 570 − 16\nУ — 413 + 347\nХ — 296 + 85\nС — 139 + 661\nЕ — 927 − 349\n\nЗамени числа соответствующими буквами:\n807, 578, 247, 543, 578, 278\n760, 800, 554, 578, 381, 543\n\nЗапиши два слова.",
     textAnswer:true,
     fields:[["Пожелание","Желаем успеха"]]
   },
@@ -716,51 +654,60 @@ const tasks=[
   }
 ];
 
-const A="../assets/";
-const KEY="ng2-peterson-20-v1";
+const ASSETS="../assets/";
+const KEY="ng2-peterson-20-v2";
 const $=id=>document.getElementById(id);
 
 const gifts=[
   ["Замок больших идей","Собери своё сказочное королевство!"],
   ["Вперёд, к приключениям!","Придумай трассу для новой машинки."],
   ["Робот — друг открытий","Какие приключения вы придумаете вместе?"],
-  ["Самокат хорошего настроения","Лови попутный ветер и собирай счастливые моменты!"],
+  ["Самокат хорошего настроения","Лови попутный ветер!"],
   ["Велосипед новых маршрутов","Открывай новые дорожки!"],
   ["Приставка весёлых приключений","Зови друзей и радуйся общим победам!"],
-  ["Наушники любимых мелодий","Слушай любимые песни, сказки и истории."],
-  ["Смартфон тёплых встреч","Сохраняй счастливые моменты и делись улыбками."],
-  ["Часы счастливых минут","Самое время для новогодних чудес!"],
+  ["Наушники любимых мелодий","Слушай любимые песни и истории."],
+  ["Смартфон тёплых встреч","Сохраняй счастливые моменты."],
+  ["Часы счастливых минут","Самое время для чудес!"],
   ["Планшет для больших идей","Рисуй, придумывай и узнавай новое!"],
   ["Герой блочных приключений","Построй свой удивительный мир."],
-  ["Дракончик тёплых объятий","Пусть рядом всегда будет добрый друг!"],
+  ["Дракончик тёплых объятий","Пусть рядом будет добрый друг!"],
   ["Книга удивительных историй","Открой книгу и отправляйся в путешествие."],
   ["Коробка сладких радостей","Пусть этот день будет особенно сладким!"],
   ["Новогодний сюрприз","Ещё один подарок в твоей коллекции!"],
   ["Подарок для новых открытий","Продолжай удивляться и пробовать новое!"],
   ["Сюрприз для хорошего настроения","Пусть поводов для улыбки станет больше!"],
   ["Маленькое новогоднее чудо","Пусть сбываются добрые желания!"],
-  ["Подарок для мечтателя","Самые интересные приключения ещё впереди!"],
+  ["Подарок для мечтателя","Приключения ещё впереди!"],
   ["Последний подарок","Ты собрал всю новогоднюю коллекцию!"]
 ];
 
 let saved={};
+
 try{
   const value=JSON.parse(localStorage.getItem(KEY)||"{}");
-  if(value&&typeof value==="object")saved=value;
+  if(value&&typeof value==="object"&&!Array.isArray(value)){
+    saved=value;
+  }
 }catch{}
 
 const opened=new Set(
   Array.isArray(saved.opened)
-    ? saved.opened.filter(n=>Number.isInteger(n)&&n>=0&&n<40)
-    : []
+    ?saved.opened.filter(n=>Number.isInteger(n)&&n>=0&&n<40)
+    :[]
 );
 
 let progress=saved.progress&&typeof saved.progress==="object"
-  ? saved.progress:{};
+  &&!Array.isArray(saved.progress)?saved.progress:{};
+
 let soundOn=saved.soundOn===true;
 let won=saved.won===true;
-let busy=false,currentTask=null,lastWindow=null;
-let drawing=false,erasing=false,version=0,lastPoint=null;
+let busy=false;
+let currentTask=null;
+let lastWindow=null;
+let drawing=false;
+let erasing=false;
+let drawingVersion=0;
+let lastPoint=null;
 
 const video=$("video");
 const canvas=$("canvas");
@@ -796,6 +743,7 @@ function render(){
     button.className="window"+(done?" opened":"")+(done&&gift?" revealed":"");
     button.dataset.index=String(i);
     button.disabled=busy;
+
     button.setAttribute(
       "aria-label",
       "Окошко "+(i+1)+": "+
@@ -810,12 +758,13 @@ function render(){
     const image=document.createElement("img");
     image.alt="";
     image.draggable=false;
-    image.src=A+(
+
+    image.src=ASSETS+(
       done
-        ? gift
-          ? (n+1)+".png"
-          : "Открытая коралловая коробка с золотым бантом.png"
-        : "Коралловый подарок с золотым бантом.png"
+        ?gift
+          ?(n+1)+".png"
+          :"Открытая коралловая коробка с золотым бантом.png"
+        :"Коралловый подарок с золотым бантом.png"
     );
 
     button.append(number,image);
@@ -832,7 +781,10 @@ function render(){
 
 function setBusy(value){
   busy=value;
-  document.querySelectorAll(".window").forEach(b=>b.disabled=value);
+
+  document.querySelectorAll(".window").forEach(b=>{
+    b.disabled=value;
+  });
 
   for(const id of ["greeting-button","victory-button","reset-button"]){
     $(id).disabled=value;
@@ -843,52 +795,59 @@ function updateSound(){
   video.muted=!soundOn;
   $("sound-button").setAttribute("aria-pressed",String(soundOn));
   $("sound-button").textContent=soundOn
-    ? "♫ Звук включён"
-    : "♫ Звук выключен";
+    ?"♫ Звук включён"
+    :"♫ Звук выключен";
 }
 
+/* Карточка открывается после окончания видео.
+   При ошибке файла игра сообщает о проблеме и продолжает работу. */
 function playClip(file){
   return new Promise(resolve=>{
     setBusy(true);
     $("card").hidden=true;
 
     let finished=false;
-    const timeout=setTimeout(()=>finish(false),45000);
+    let timer=setTimeout(()=>finish(false),15000);
 
     function finish(ok){
       if(finished)return;
-      finished=true;
-      clearTimeout(timeout);
 
+      finished=true;
+      clearTimeout(timer);
+
+      video.removeEventListener("playing",playing);
       video.removeEventListener("ended",ended);
       video.removeEventListener("error",failed);
       video.pause();
 
       setBusy(false);
       $("greeting-button").textContent="▶ Приветствие";
-
-      if(!ok){
-        $("status").textContent=
-          "Не удалось воспроизвести видео. Проверьте файлы в папке assets.";
-      }else{
-        $("status").textContent="";
-      }
+      $("status").textContent=ok
+        ?""
+        :"Видео не загрузилось. Проверьте файл "+file+" в папке assets.";
 
       resolve(ok);
+    }
+
+    function playing(){
+      clearTimeout(timer);
+      timer=setTimeout(()=>finish(false),60000);
     }
 
     function ended(){finish(true)}
     function failed(){finish(false)}
 
     video.pause();
-    video.src=A+file;
+    video.src=ASSETS+file;
     video.loop=false;
     video.muted=!soundOn;
 
+    video.addEventListener("playing",playing);
     video.addEventListener("ended",ended);
     video.addEventListener("error",failed);
+
     video.load();
-    video.play().catch(()=>finish(false));
+    video.play().catch(failed);
   });
 }
 
@@ -896,7 +855,7 @@ async function openWindow(i){
   if(busy||!$("card").hidden)return;
 
   lastWindow=i;
- facil  const fresh=!opened.has(i);
+  const fresh=!opened.has(i);
 
   opened.add(i);
   save();
@@ -923,6 +882,7 @@ function prepareCard(type,title,text,kicker){
   $("form").hidden=true;
   $("gift-close").hidden=true;
   $("card").hidden=false;
+  $("card").scrollTop=0;
 }
 
 function showGift(n){
@@ -935,16 +895,23 @@ function showGift(n){
     "ПОДАРОК "+(n+1)
   );
 
-  $("picture").src=A+(n+1)+".png";
+  $("picture").src=ASSETS+(n+1)+".png";
   $("picture").alt=gifts[n][0];
   $("picture").hidden=false;
-
   $("gift-close").textContent="Чудесно!";
   $("gift-close").hidden=false;
   $("gift-close").focus({preventScroll:true});
 }
 
-function normalText(value){
+function normalizeExpression(value){
+  return String(value)
+    .toLowerCase()
+    .replace(/[−–—]/g,"-")
+    .replace(/х/g,"x")
+    .replace(/\s+/g,"");
+}
+
+function normalizeWord(value){
   return String(value)
     .toLowerCase()
     .replace(/ё/g,"е")
@@ -952,12 +919,18 @@ function normalText(value){
 }
 
 function isCorrect(value,expected){
+  if(Array.isArray(expected)){
+    return expected.some(variant=>
+      normalizeExpression(value)===normalizeExpression(variant)
+    );
+  }
+
   if(typeof expected==="number"){
     const clean=String(value).trim();
     return /^\d+$/.test(clean)&&Number(clean)===expected;
   }
 
-  return normalText(value)===normalText(expected);
+  return normalizeWord(value)===normalizeWord(expected);
 }
 
 function showTask(n){
@@ -966,6 +939,10 @@ function showTask(n){
   const task=tasks[n];
   const previous=progress[n]||{};
   const values=Array.isArray(previous.values)?previous.values:[];
+
+  const solved=previous.solved===true&&task.fields.every((field,i)=>
+    isCorrect(values[i]??"",field[1])
+  );
 
   prepareCard(
     "task",
@@ -977,23 +954,36 @@ function showTask(n){
   $("form").hidden=false;
   $("fields").replaceChildren();
 
-  task.fields.forEach(([label],index)=>{
+  task.fields.forEach(([label,expected],index)=>{
     const row=document.createElement("label");
-    row.className="answer"+(task.textAnswer?" text-answer":"");
+    row.className="answer"+
+      (task.textAnswer?" text-answer":"")+
+      (task.equation?" equation-answer":"");
 
     const caption=document.createElement("span");
     caption.textContent=label;
 
     const input=document.createElement("input");
     input.type="text";
-    input.inputMode=task.textAnswer?"text":"numeric";
+    input.inputMode=typeof expected==="number"?"numeric":"text";
     input.autocomplete="off";
     input.spellcheck=false;
-    input.setAttribute("aria-label",label);
-    input.value=String(values[index]??"");
-    input.disabled=previous.solved===true;
 
-    if(previous.solved){
+    input.setAttribute(
+      "aria-label",
+      task.equation
+        ?["Выражение для нахождения x","Значение x","Проверка уравнения"][index]
+        :label
+    );
+
+    input.value=String(values[index]??"");
+    input.disabled=solved;
+
+    if(task.equation&&index===2){
+      input.placeholder="Запиши проверку";
+    }
+
+    if(solved){
       input.setAttribute("aria-invalid","false");
     }else if(
       Array.isArray(previous.checked)&&
@@ -1025,24 +1015,23 @@ function showTask(n){
     $("fields").append(row);
   });
 
-  $("check").disabled=previous.solved===true;
-  $("check").textContent=previous.solved
-    ? "✓ Задание выполнено"
-    : "Проверить";
+  $("check").disabled=solved;
+  $("check").textContent=solved
+    ?"✓ Задание выполнено"
+    :"Проверить";
 
-  $("feedback").className=previous.solved?"success":"";
-  $("feedback").textContent=previous.solved
-    ? "Верно! Ответы сохранены."
-    : "";
+  $("feedback").className=solved?"success":"";
+  $("feedback").textContent=solved
+    ?"Верно! Ответы сохранены."
+    :"";
 
   loadDrawing(previous.drawing);
-
-  $("card").scrollTop=0;
   $("card-close").focus({preventScroll:true});
 }
 
 $("form").addEventListener("submit",event=>{
   event.preventDefault();
+
   if(currentTask===null)return;
 
   const n=currentTask;
@@ -1066,8 +1055,8 @@ $("form").addEventListener("submit",event=>{
   save();
 
   $("feedback").textContent=solved
-    ? "Верно! Задание выполнено."
-    : "Проверь выделенные ответы и попробуй ещё раз.";
+    ?"Верно! Задание выполнено."
+    :"Проверь выделенные ответы и попробуй ещё раз.";
 
   $("feedback").className=solved?"success":"";
 
@@ -1090,7 +1079,9 @@ async function closeCard(){
       '[data-index="'+lastWindow+'"]'
     );
 
-    if(button)button.focus({preventScroll:true});
+    if(button){
+      button.focus({preventScroll:true});
+    }
   }
 
   await checkVictory();
@@ -1106,14 +1097,19 @@ document.addEventListener("keydown",event=>{
 });
 
 async function checkVictory(force=false){
-  if(busy||!$("card").hidden||giftCount()!==20)return;
-  if(won&&!force)return;
+  if(
+    busy||
+    !$("card").hidden||
+    giftCount()!==20||
+    (won&&!force)
+  ){
+    return;
+  }
 
-  won=true;
+ Mastercard  won=true;
   save();
 
   await playClip("pobeda.mp4");
-
   currentTask=null;
 
   prepareCard(
@@ -1148,7 +1144,7 @@ $("greeting-button").addEventListener("click",()=>{
   }
 
   if(!greeting||video.ended){
-    video.src=A+"privet3.mp4";
+    video.src=ASSETS+"privet3.mp4";
     video.load();
   }
 
@@ -1157,8 +1153,7 @@ $("greeting-button").addEventListener("click",()=>{
   video.play().then(()=>{
     $("greeting-button").textContent="Ⅱ Пауза";
   }).catch(()=>{
-    $("status").textContent=
-      "Не удалось запустить приветствие. Проверьте файл privet3.mp4.";
+    $("status").textContent="Не удалось запустить приветствие.";
   });
 });
 
@@ -1178,7 +1173,7 @@ $("pencil").addEventListener("click",()=>setTool(false));
 $("eraser").addEventListener("click",()=>setTool(true));
 
 function loadDrawing(data){
-  const revision=++version;
+  const revision=++drawingVersion;
 
   drawing=false;
   pen.clearRect(0,0,canvas.width,canvas.height);
@@ -1194,7 +1189,7 @@ function loadDrawing(data){
   const image=new Image();
 
   image.onload=()=>{
-    if(revision!==version)return;
+    if(revision!==drawingVersion)return;
 
     pen.save();
     pen.globalCompositeOperation="source-over";
@@ -1227,8 +1222,8 @@ function point(event){
 
 function stroke(from,to){
   pen.globalCompositeOperation=erasing
-    ? "destination-out"
-    : "source-over";
+    ?"destination-out"
+    :"source-over";
 
   pen.strokeStyle="#244c39";
   pen.lineWidth=erasing?30:4;
@@ -1245,7 +1240,7 @@ canvas.addEventListener("pointerdown",event=>{
   if(currentTask===null)return;
 
   event.preventDefault();
-  version++;
+  drawingVersion++;
   drawing=true;
 
   canvas.setPointerCapture(event.pointerId);
@@ -1274,12 +1269,12 @@ function finishDrawing(){
   }
 }
 
-for(const event of ["pointerup","pointercancel","lostpointercapture"]){
-  canvas.addEventListener(event,finishDrawing);
+for(const name of ["pointerup","pointercancel","lostpointercapture"]){
+  canvas.addEventListener(name,finishDrawing);
 }
 
 $("clear").addEventListener("click",()=>{
-  version++;
+  drawingVersion++;
   drawing=false;
   pen.clearRect(0,0,canvas.width,canvas.height);
   saveDrawing();
@@ -1287,6 +1282,7 @@ $("clear").addEventListener("click",()=>{
 
 $("reset-button").addEventListener("click",()=>{
   if(!busy){
+    $("reset-dialog").returnValue="cancel";
     $("reset-dialog").showModal();
   }
 });
@@ -1294,18 +1290,18 @@ $("reset-button").addEventListener("click",()=>{
 $("reset-dialog").addEventListener("close",()=>{
   if($("reset-dialog").returnValue!=="reset")return;
 
-  version++;
+  drawingVersion++;
   drawing=false;
   currentTask=null;
-
   $("card").hidden=true;
+
   opened.clear();
   progress={};
   won=false;
   lastWindow=null;
 
   video.pause();
-  video.src=A+"privet3.mp4";
+  video.src=ASSETS+"privet3.mp4";
   video.load();
 
   $("greeting-button").textContent="▶ Приветствие";
@@ -1315,18 +1311,22 @@ $("reset-dialog").addEventListener("close",()=>{
   render();
 });
 
-/* Обязательный запуск игры: создаёт все 40 окошек. */
+/* Создание всех 40 окошек и восстановление настроек. */
 render();
 updateSound();
 
-video.src=A+"privet3.mp4";
+video.src=ASSETS+"privet3.mp4";
 video.muted=true;
 
 video.play().then(()=>{
-  video.muted=!soundOn;
-  $("greeting-button").textContent="Ⅱ Пауза";
+  if(!busy){
+    video.muted=!soundOn;
+    $("greeting-button").textContent="Ⅱ Пауза";
+  }
 }).catch(()=>{
-  video.muted=!soundOn;
+  if(!busy){
+    video.muted=!soundOn;
+  }
 });
 </script>
 </body>

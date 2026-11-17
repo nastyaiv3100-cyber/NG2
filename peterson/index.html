@@ -22,10 +22,7 @@ body{
 button,input{font:inherit}
 button{cursor:pointer}
 button:disabled{cursor:default;opacity:.65}
-button:focus-visible,input:focus-visible{
-  outline:3px solid var(--green);
-  outline-offset:3px;
-}
+button:focus-visible,input:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 #stage{position:fixed;inset:0;z-index:0;pointer-events:none}
 #video{display:block;width:100%;height:100%;object-fit:fill}
 header{
@@ -50,13 +47,7 @@ header{
 }
 .brand img{width:42px;height:42px;object-fit:contain}
 .brand strong{display:block;font-size:16px}
-.brand a{
-  display:block;
-  margin-top:4px;
-  color:var(--cream);
-  font-size:13px;
-  text-underline-offset:3px;
-}
+.brand a{display:block;margin-top:4px;color:var(--cream);font-size:13px;text-underline-offset:3px}
 .actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
 .pill{
   border:1px solid #fffaf18c;
@@ -87,13 +78,7 @@ main{
   flex-direction:column;
   background:transparent;
 }
-.topline{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-shrink:0;
-}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-shrink:0}
 .heading{flex:1;min-width:0;text-align:center;padding-left:20px}
 .heading h1{
   font-family:Georgia,serif;
@@ -120,20 +105,8 @@ main{
   font-size:17px;
 }
 .counter small{display:block;font-size:10px;margin-top:4px}
-.progress-line{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:12px;
-  flex-shrink:0;
-}
-.track{
-  height:5px;
-  background:#fffaf170;
-  border-radius:8px;
-  flex:1;
-  overflow:hidden;
-}
+.progress-line{display:flex;align-items:center;gap:10px;margin-top:12px;flex-shrink:0}
+.track{height:5px;background:#fffaf170;border-radius:8px;flex:1;overflow:hidden}
 #fill{height:100%;width:0;background:var(--red);transition:width .25s}
 #percent{
   background:var(--cream);
@@ -247,16 +220,11 @@ main{
   height:34px;
   border:0;
   border-radius:10px;
-  background:var(--red);
+jón  background:var(--red);
   color:var(--cream);
   font-size:25px;
 }
-#kicker{
-  font-size:11px;
-  letter-spacing:1.5px;
-  color:var(--green);
-  margin-bottom:10px;
-}
+#kicker{font-size:11px;letter-spacing:1.5px;color:var(--green);margin-bottom:10px}
 #title{
   color:var(--red-dark);
   font-family:Georgia,serif;
@@ -264,12 +232,7 @@ main{
   line-height:1.25;
   margin:0 28px 14px 0;
 }
-#text{
-  white-space:pre-line;
-  font-size:22px;
-  line-height:1.5;
-  margin:0 0 18px;
-}
+#text{white-space:pre-line;font-size:22px;line-height:1.5;margin:0 0 18px}
 #picture{
   display:block;
   width:min(230px,60%);
@@ -279,14 +242,7 @@ main{
   filter:drop-shadow(0 8px 8px #63301d25);
 }
 #fields{display:flex;flex-direction:column;gap:13px}
-.answer{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-  font-size:22px;
-  line-height:1.4;
-}
+.answer{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:22px;line-height:1.4}
 .answer span{flex:1;min-width:110px}
 .answer input{
   width:110px;
@@ -305,11 +261,7 @@ main{
 .equation-answer{justify-content:flex-start}
 .equation-answer span{flex:0 0 auto;min-width:0}
 .equation-answer input{flex:0 1 360px;width:360px}
-.answer input[aria-invalid="true"]{
-  border:2px solid #b12e3b;
-  background:#ffe0de;
-  color:#7c1717;
-}
+.answer input[aria-invalid="true"]{border:2px solid #b12e3b;background:#ffe0de;color:#7c1717}
 .answer input[aria-invalid="false"]{
   border:2px solid #329445;
   background:#dff5df;
@@ -317,11 +269,7 @@ main{
   -webkit-text-fill-color:#155d27;
   opacity:1;
 }
-.scratch{
-  border-top:1px solid #78948277;
-  margin-top:18px;
-  padding-top:12px;
-}
+.scratch{border-top:1px solid #78948277;margin-top:18px;padding-top:12px}
 .scratch h3{font-size:18px;margin:0 0 9px}
 #canvas{
   display:block;
@@ -355,13 +303,15 @@ main{
   font-weight:700;
   margin-top:16px;
 }
-#feedback{font-size:18px;line-height:1.4;margin:12px 0 0;color:#a72e39}
-#feedback.success{color:#24613b}
-#reset-dialog{
-  width:min(430px,calc(100% - 24px));
-  padding:26px;
-  color:var(--green);
+#feedback{
+  white-space:pre-line;
+  font-size:18px;
+  line-height:1.5;
+  margin:12px 0 0;
+  color:#a72e39;
 }
+#feedback.success{color:#24613b}
+#reset-dialog{width:min(430px,calc(100% - 24px));padding:26px;color:var(--green)}
 #reset-dialog::backdrop{background:#321b184d;backdrop-filter:blur(4px)}
 #reset-dialog h2{font-family:Georgia,serif;color:var(--red)}
 #reset-dialog p{font-size:18px;line-height:1.5}
@@ -416,9 +366,7 @@ main{
   #card.gift{min-height:0}
   #picture{height:140px}
 }
-@media(prefers-reduced-motion:reduce){
-  *{transition:none!important}
-}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
@@ -440,9 +388,7 @@ main{
   </div>
   <div class="actions">
     <button class="pill" id="greeting-button" type="button">▶ Приветствие</button>
-    <button class="pill" id="sound-button" type="button" aria-pressed="false">
-      ♫ Звук выключен
-    </button>
+    <button class="pill" id="sound-button" type="button" aria-pressed="false">♫ Звук выключен</button>
     <button class="pill" id="victory-button" type="button" hidden>🏆 Победа</button>
     <button class="pill" id="reset-button" type="button">↻ Начать заново</button>
   </div>
@@ -579,7 +525,7 @@ const tasks=[
   },
   {
     title:"Выполни действия:",
-    text:"Вычисли значения выражений. Каждому результату соответствует буква.",
+    text:"Вычисли значения выражений.\nРасположи результаты в порядке возрастания. Соответствующие буквы составят название города.",
     fields:[
       ["А: 115 + 285 =",400],
       ["Ь: 398 + 87 =",485],
@@ -628,7 +574,7 @@ const tasks=[
   },
   {
     title:"Выполни действия:",
-    text:"Вычисли значения выражений. Каждому результату соответствует буква.",
+    text:"Вычисли значения выражений.\nЗамени числа соответствующими буквами:\n807, 578, 247, 543, 578, 278\n760, 800, 554, 578, 381, 543\nПолучится пожелание.",
     fields:[
       ["М: 265 + 13 =",278],
       ["А: 744 − 201 =",543],
@@ -654,8 +600,7 @@ const tasks=[
   }
 ];
 
-const ASSETS="../assets/";
-const KEY="ng2-peterson-20-v2";
+const ASSETS="../assets/",KEY="ng2-peterson-20-v2";
 const $=id=>document.getElementById(id);
 
 const gifts=[
@@ -690,32 +635,45 @@ try{
   }
 }catch{}
 
+function shuffled(){
+  const result=Array.from({length:40},(_,i)=>i);
+
+  for(let i=result.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [result[i],result[j]]=[result[j],result[i]];
+  }
+
+  return result;
+}
+
+function validOrder(value){
+  return Array.isArray(value)&&
+    value.length===40&&
+    new Set(value).size===40&&
+    value.every(n=>Number.isInteger(n)&&n>=0&&n<40);
+}
+
+let order=validOrder(saved.order)?saved.order:shuffled();
+
 const opened=new Set(
   Array.isArray(saved.opened)
     ?saved.opened.filter(n=>Number.isInteger(n)&&n>=0&&n<40)
     :[]
 );
 
-let progress=saved.progress&&typeof saved.progress==="object"
-  &&!Array.isArray(saved.progress)?saved.progress:{};
+let progress=saved.progress&&typeof saved.progress==="object"&&
+  !Array.isArray(saved.progress)?saved.progress:{};
 
-let soundOn=saved.soundOn===true;
-let won=saved.won===true;
-let busy=false;
-let currentTask=null;
-let lastWindow=null;
-let drawing=false;
-let erasing=false;
-let drawingVersion=0;
-let lastPoint=null;
+let soundOn=saved.soundOn===true,won=saved.won===true;
+let busy=false,currentTask=null,lastWindow=null;
+let drawing=false,erasing=false,drawingVersion=0,lastPoint=null;
 
-const video=$("video");
-const canvas=$("canvas");
-const pen=canvas.getContext("2d");
+const video=$("video"),canvas=$("canvas"),pen=canvas.getContext("2d");
 
 function save(){
   try{
     localStorage.setItem(KEY,JSON.stringify({
+      order,
       opened:[...opened],
       progress,
       soundOn,
@@ -733,32 +691,26 @@ function giftCount(){
 function render(){
   $("windows").replaceChildren();
 
-  for(let i=0;i<40;i++){
-    const gift=i%2===0;
-    const n=Math.floor(i/2);
-    const done=opened.has(i);
+  order.forEach((i,position)=>{
+    const gift=i%2===0,n=Math.floor(i/2),done=opened.has(i);
 
     const button=document.createElement("button");
     button.type="button";
     button.className="window"+(done?" opened":"")+(done&&gift?" revealed":"");
     button.dataset.index=String(i);
     button.disabled=busy;
-
     button.setAttribute(
       "aria-label",
-      "Окошко "+(i+1)+": "+
-      (gift?"подарок":"задание")+
-      (done?", уже открыто":"")
+      "Окошко "+(position+1)+(done?", уже открыто":"")
     );
 
     const number=document.createElement("span");
     number.className="number";
-    number.textContent=String(i+1).padStart(2,"0");
+    number.textContent=String(position+1).padStart(2,"0");
 
     const image=document.createElement("img");
     image.alt="";
     image.draggable=false;
-
     image.src=ASSETS+(
       done
         ?gift
@@ -770,7 +722,7 @@ function render(){
     button.append(number,image);
     button.addEventListener("click",()=>openWindow(i));
     $("windows").append(button);
-  }
+  });
 
   $("gift-count").textContent=String(giftCount());
   $("percent").textContent=Math.round(opened.size/40*100)+"%";
@@ -782,8 +734,8 @@ function render(){
 function setBusy(value){
   busy=value;
 
-  document.querySelectorAll(".window").forEach(b=>{
-    b.disabled=value;
+  document.querySelectorAll(".window").forEach(button=>{
+    button.disabled=value;
   });
 
   for(const id of ["greeting-button","victory-button","reset-button"]){
@@ -799,22 +751,18 @@ function updateSound(){
     :"♫ Звук выключен";
 }
 
-/* Карточка открывается после окончания видео.
-   При ошибке файла игра сообщает о проблеме и продолжает работу. */
 function playClip(file){
   return new Promise(resolve=>{
     setBusy(true);
     $("card").hidden=true;
 
-    let finished=false;
-    let timer=setTimeout(()=>finish(false),15000);
+    let finished=false,timer=setTimeout(()=>finish(false),15000);
 
     function finish(ok){
       if(finished)return;
 
       finished=true;
       clearTimeout(timer);
-
       video.removeEventListener("playing",playing);
       video.removeEventListener("ended",ended);
       video.removeEventListener("error",failed);
@@ -888,16 +836,12 @@ function prepareCard(type,title,text,kicker){
 function showGift(n){
   currentTask=null;
 
-  prepareCard(
-    "gift",
-    gifts[n][0],
-    gifts[n][1],
-    "ПОДАРОК "+(n+1)
-  );
+  prepareCard("gift",gifts[n][0],gifts[n][1],"ПОДАРОК "+(n+1));
 
   $("picture").src=ASSETS+(n+1)+".png";
   $("picture").alt=gifts[n][0];
   $("picture").hidden=false;
+
   $("gift-close").textContent="Чудесно!";
   $("gift-close").hidden=false;
   $("gift-close").focus({preventScroll:true});
@@ -933,11 +877,47 @@ function isCorrect(value,expected){
   return normalizeWord(value)===normalizeWord(expected);
 }
 
+function completionText(n){
+  if(n===9){
+    const ordered=tasks[n].fields
+      .map(([label,value])=>({
+        letter:label.trim()[0],
+        value
+      }))
+      .sort((a,b)=>a.value-b.value);
+
+    return "Верно!\n\n"+
+      ordered.map(item=>item.value+" — "+item.letter).join("; ")+
+      "\n\nНазвание города: "+
+      ordered.map(item=>item.letter).join("");
+  }
+
+  if(n===17){
+    const alphabet=new Map(
+      tasks[n].fields.map(([label,value])=>[value,label.trim()[0]])
+    );
+
+    const codes=[
+      [807,578,247,543,578,278],
+      [760,800,554,578,381,543]
+    ];
+
+    const words=codes.map(code=>
+      code.map(number=>alphabet.get(number)).join("")
+    );
+
+    return "Верно!\n\n"+
+      codes.map((code,i)=>code.join(", ")+" → "+words[i]).join("\n")+
+      "\n\n"+words.join(" ")+"!";
+  }
+
+  return "Верно! Задание выполнено. Ответы сохранены.";
+}
+
 function showTask(n){
   currentTask=n;
 
-  const task=tasks[n];
-  const previous=progress[n]||{};
+  const task=tasks[n],previous=progress[n]||{};
   const values=Array.isArray(previous.values)?previous.values:[];
 
   const solved=previous.solved===true&&task.fields.every((field,i)=>
@@ -1016,14 +996,9 @@ function showTask(n){
   });
 
   $("check").disabled=solved;
-  $("check").textContent=solved
-    ?"✓ Задание выполнено"
-    :"Проверить";
-
+  $("check").textContent=solved?"✓ Задание выполнено":"Проверить";
+  $("feedback").textContent=solved?completionText(n):"";
   $("feedback").className=solved?"success":"";
-  $("feedback").textContent=solved
-    ?"Верно! Ответы сохранены."
-    :"";
 
   loadDrawing(previous.drawing);
   $("card-close").focus({preventScroll:true});
@@ -1055,13 +1030,13 @@ $("form").addEventListener("submit",event=>{
   save();
 
   $("feedback").textContent=solved
-    ?"Верно! Задание выполнено."
+    ?completionText(n)
     :"Проверь выделенные ответы и попробуй ещё раз.";
 
   $("feedback").className=solved?"success":"";
 
   if(solved){
-    inputs.forEach(e=>e.disabled=true);
+    inputs.forEach(input=>input.disabled=true);
     $("check").disabled=true;
     $("check").textContent="✓ Задание выполнено";
   }
@@ -1097,18 +1072,9 @@ document.addEventListener("keydown",event=>{
 });
 
 async function checkVictory(force=false){
-  if(
-    busy ||
-    !$("card").hidden ||
-    giftCount()!==20 ||
-    (won && !force)
-  ){
-    return;
-  }
-
+  if(busy||!$("card").hidden||giftCount()!==20||(won&&!force))return;
   won=true;
   save();
-
   await playClip("pobeda.mp4");
   currentTask=null;
 
@@ -1221,15 +1187,11 @@ function point(event){
 }
 
 function stroke(from,to){
-  pen.globalCompositeOperation=erasing
-    ?"destination-out"
-    :"source-over";
-
+  pen.globalCompositeOperation=erasing?"destination-out":"source-over";
   pen.strokeStyle="#244c39";
   pen.lineWidth=erasing?30:4;
   pen.lineCap="round";
   pen.lineJoin="round";
-
   pen.beginPath();
   pen.moveTo(from.x,from.y);
   pen.lineTo(to.x,to.y);
@@ -1242,7 +1204,6 @@ canvas.addEventListener("pointerdown",event=>{
   event.preventDefault();
   drawingVersion++;
   drawing=true;
-
   canvas.setPointerCapture(event.pointerId);
   lastPoint=point(event);
 
@@ -1299,6 +1260,7 @@ $("reset-dialog").addEventListener("close",()=>{
   progress={};
   won=false;
   lastWindow=null;
+  order=shuffled();
 
   video.pause();
   video.src=ASSETS+"privet3.mp4";
@@ -1311,9 +1273,10 @@ $("reset-dialog").addEventListener("close",()=>{
   render();
 });
 
-/* Создание всех 40 окошек и восстановление настроек. */
+/* Запуск игры и сохранение порядка окошек. */
 render();
 updateSound();
+save();
 
 video.src=ASSETS+"privet3.mp4";
 video.muted=true;

@@ -1098,10 +1098,10 @@ document.addEventListener("keydown",event=>{
 
 async function checkVictory(force=false){
   if(
-    busy||
-    !$("card").hidden||
-    giftCount()!==20||
-    (won&&!force)
+    busy ||
+    !$("card").hidden ||
+    giftCount()!==20 ||
+    (won && !force)
   ){
     return;
   }
